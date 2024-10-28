@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* h1,
+h2 {
+      font-family: Inter, sans-serif;
+}
+p {
+      font-family: Montserrat, sans-serif;
+} */
+* {
+      font-family: 'Hind Siliguri', sans-serif;
+}
+.aboutHeroBg {
+      background-image: url('../assets/images/about/dog.png');
+      min-height: calc(100vh);
+      background-position: top;
+      background-repeat: no-repeat;
+      width: 100%;
+      background-size: cover;
+}
+
+.authBg {
+      background-image: url('../assets/images/auth/authbg.png');
+      min-height: calc(100vh - 96px);
+      background-position: top;
+      background-repeat: no-repeat;
+      width: 100%;
+      background-size: cover;
+}
+
+.hero-bg {
+      background: rgb(255, 255, 255);
+      background: radial-gradient(
+            circle,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(249, 229, 232, 1) 51%,
+            rgba(249, 229, 232, 1) 74%,
+            rgba(249, 229, 232, 1) 100%
+      );
+}

@@ -1,4 +1,7 @@
 'use client';
+import { logout } from '@/redux/features/auth/authSlice';
+import { useAppDispatch } from '@/redux/hooks';
+import { removeAccessToken } from '@/utils/authUtils';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { CiLogout } from 'react-icons/ci';
@@ -9,6 +12,7 @@ import Swal from 'sweetalert2';
 const DashboardSidebar = () => {
       const pathName = usePathname();
       const router = useRouter();
+      const dispatch = useAppDispatch();
       const handleBackClick = () => {
             router.back();
       };
@@ -24,11 +28,14 @@ const DashboardSidebar = () => {
                   confirmButtonText: 'Yes, logout!',
             }).then((result) => {
                   if (result.isConfirmed) {
-                        router.push('/');
+                        dispatch(logout());
+                        removeAccessToken();
+
                         Swal.fire({
                               text: 'Logout successfully',
                               icon: 'success',
                         });
+                        router.push('/');
                   }
             });
       };

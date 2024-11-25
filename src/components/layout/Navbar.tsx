@@ -12,10 +12,16 @@ import MobileDrawer from './MobileDrawer';
 import { usePathname } from 'next/navigation';
 import { Button } from 'antd';
 import { useAppSelector } from '@/redux/hooks';
+import { useMyProfileQuery } from '@/redux/features/user/userApi';
+import { getImageUrl } from '@/utils/getImageUrl';
 
 const Navbar = () => {
       const [showDrawer, setShowDrawer] = useState(false);
       const { user } = useAppSelector((state) => state.auth);
+      const { data: profile } = useMyProfileQuery(undefined, {
+            skip: !user,
+      });
+      console.log(profile);
       const pathname = usePathname();
       const items = [
             { label: 'Home', path: '/' },
@@ -48,7 +54,13 @@ const Navbar = () => {
                                     {user ? (
                                           <Link href={'/dashboard/accounts'}>
                                                 <div className="w-14 h-14 rounded-full overflow-hidden">
-                                                      <Image src={Profile} alt="Profile" width={56} height={56} className="object-cover" />
+                                                      <Image
+                                                            src={getImageUrl(profile?.image)}
+                                                            alt="Profile"
+                                                            width={56}
+                                                            height={56}
+                                                            className="object-cover"
+                                                      />
                                                 </div>
                                           </Link>
                                     ) : (
@@ -77,7 +89,7 @@ const Navbar = () => {
                   </nav>
 
                   {/* Mobile Drawer */}
-                  <MobileDrawer open={showDrawer} setOpen={setShowDrawer} items={items} />
+                  <MobileDrawer profile={profile} open={showDrawer} setOpen={setShowDrawer} items={items} />
             </header>
       );
 };

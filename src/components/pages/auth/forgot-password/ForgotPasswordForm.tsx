@@ -1,16 +1,30 @@
 'use client';
 import React from 'react';
-import { Input, Button, Checkbox, Form, ConfigProvider } from 'antd';
+import { Input, Button, Checkbox, Form, ConfigProvider, notification } from 'antd';
 import { IoMailOutline } from 'react-icons/io5';
 import { FcGoogle } from 'react-icons/fc';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useForgetPasswordMutation } from '@/redux/features/auth/authApi';
 
 const ForgotPasswordForm = () => {
       const router = useRouter();
-      const onFinish = (values: FormData) => {
-            console.log('Form Values:', values);
-            router.push('/verify-otp');
+      const [forgetPassword] = useForgetPasswordMutation();
+      const onFinish = async (values: any) => {
+            try {
+                  const res = await forgetPassword(values).unwrap();
+                  if (res.success) {
+                        notification.success({
+                              message: res.message,
+                        });
+                        localStorage.setItem('verifyEmail', values.email);
+                        router.push('/verify-otp?purpose=reset-password');
+                  }
+            } catch (error: any) {
+                  notification.error({
+                        message: error?.data?.message || 'Something went wrong. Please try again.',
+                  });
+            }
       };
       return (
             <div className="flex items-center justify-center h-full">

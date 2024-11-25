@@ -1,14 +1,42 @@
 'use client';
 import React from 'react';
-import { Input, Button, Form, ConfigProvider } from 'antd';
+import { Input, Button, Form, ConfigProvider, notification } from 'antd';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useVerifyEmailMutation } from '@/redux/features/auth/authApi';
 
 const OtpVerifyForm = () => {
+      const [verifyEmail] = useVerifyEmailMutation();
       const router = useRouter();
-      const onFinish = (values: FormData) => {
-            console.log('Form Values:', values);
-            router.push('/set-password');
+      const searchParams = useSearchParams();
+      const purpose = searchParams.get('purpose');
+      const onFinish = async (values: any) => {
+            try {
+                  const body = {
+                        oneTimeCode: Number(values.oneTimeOtp),
+                        email: localStorage.getItem('verifyEmail'),
+                  };
+                  const res = await verifyEmail(body).unwrap();
+                  if (res.success) {
+                        notification.success({
+                              message: res?.message,
+                        });
+                        localStorage.removeItem('verifyEmail');
+                        localStorage.setItem('oneTimeToken', res.data);
+
+                        if (purpose === 'reset-password') {
+                              router.push('/set-password');
+                        } else {
+                              router.push('/login');
+                        }
+                  }
+            } catch (error: any) {
+                  notification.error({
+                        message: 'Verify Failed',
+                        description: error?.data?.message || 'Something went wrong. Please try again.',
+                        duration: 3,
+                  });
+            }
       };
       return (
             <div className="flex items-center justify-center h-full">
@@ -28,7 +56,7 @@ const OtpVerifyForm = () => {
                                           }}
                                     >
                                           <Form.Item
-                                                name="email"
+                                                name="oneTimeOtp"
                                                 rules={[{ required: true, message: 'Please enter your 6 digit otp here' }]}
                                           >
                                                 <Input.OTP

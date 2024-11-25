@@ -1,7 +1,13 @@
+'use client';
 import React, { ReactNode } from 'react';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { ConfigProvider } from 'antd';
+
+import dynamic from 'next/dynamic';
 const Providers = ({ children }: { children: ReactNode }) => {
+      const ReduxProvider = dynamic(() => import('@/redux/lib/ReduxProvider'), {
+            ssr: false,
+      });
       return (
             <AntdRegistry>
                   <ConfigProvider
@@ -26,7 +32,7 @@ const Providers = ({ children }: { children: ReactNode }) => {
                               },
                         }}
                   >
-                        {children}
+                        <ReduxProvider>{children}</ReduxProvider>
                   </ConfigProvider>
             </AntdRegistry>
       );

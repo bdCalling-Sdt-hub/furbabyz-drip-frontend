@@ -1,14 +1,32 @@
 'use client';
 import React from 'react';
-import { Input, Button, Form, ConfigProvider } from 'antd';
+import { Input, Button, Form, ConfigProvider, notification } from 'antd';
 import { useRouter } from 'next/navigation';
+import { useResetPasswordMutation } from '@/redux/features/auth/authApi';
 
 const SetPasswordForm = () => {
       const router = useRouter();
-      const onFinish = (values: FormData) => {
-            console.log('Form Values:', values);
-            router.push('/');
+      const [resetPassword] = useResetPasswordMutation();
+
+      const onFinish = async (values: FormData) => {
+            console.log('Success:', values);
+
+            // try {
+            //       const res = await resetPassword(values).unwrap();
+            //       if (res.success) {
+            //             notification.success({
+            //                   message: res.message,
+            //             });
+            //             localStorage.removeItem('oneTimeToken');
+            //             router.push('/login');
+            //       }
+            // } catch (error: any) {
+            //       notification.error({
+            //             message: error?.data?.message || 'Something went wrong. Please try again.',
+            //       });
+            // }
       };
+
       return (
             <div className="flex items-center justify-center h-full">
                   <div className="border w-full md:max-w-[500px] p-8 rounded-xl">
@@ -30,10 +48,10 @@ const SetPasswordForm = () => {
                                           <div className="mb-1">
                                                 <p className="text-text-primary my-2">Create Password</p>
                                                 <Form.Item
-                                                      name="password"
+                                                      name="newPassword"
                                                       rules={[
                                                             { required: true, message: 'Please enter your password' },
-                                                            { min: 6, message: 'Password must be at least 6 characters' },
+                                                            { min: 8, message: 'Password must be at least 8 characters' },
                                                       ]}
                                                       hasFeedback
                                                 >

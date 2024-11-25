@@ -1,16 +1,43 @@
 'use client';
 import React from 'react';
-import { Input, Button, Checkbox, Form } from 'antd';
+import { Input, Button, Checkbox, Form, notification } from 'antd';
 import { IoMailOutline } from 'react-icons/io5';
 import { FcGoogle } from 'react-icons/fc';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useLoginUserMutation } from '@/redux/features/auth/authApi';
+import { useAppDispatch } from '@/redux/hooks';
+import { setAccessToken } from '../../../../utils/authUtils';
+import { setUser } from '@/redux/features/auth/authSlice';
+import { decodedUser } from '@/utils/decodedUser';
 
 const LoginForm = () => {
       const router = useRouter();
-      const onFinish = (values: FormData) => {
-            console.log('Form Values:', values);
-            router.push('/');
+      const [loginUser] = useLoginUserMutation();
+      const dispatch = useAppDispatch();
+      const onFinish = async (values: FormData) => {
+            try {
+                  const res = await loginUser(values).unwrap();
+
+                  if (res.success) {
+                        notification.success({
+                              message: res.message,
+                        });
+                        const user = decodedUser(res.data.accessToken);
+                        setAccessToken(res.data.accessToken);
+                        dispatch(
+                              setUser({
+                                    user,
+                                    token: res.data.accessToken,
+                              })
+                        );
+                        router.push('/');
+                  }
+            } catch (error: any) {
+                  notification.error({
+                        message: error?.data?.message || 'Something went wrong. Please try again.',
+                  });
+            }
       };
       return (
             <div className="flex items-center justify-center h-full">

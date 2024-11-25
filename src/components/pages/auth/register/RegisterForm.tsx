@@ -1,22 +1,35 @@
 'use client';
 import React from 'react';
-import { Input, Button, Form } from 'antd';
+import { Input, Button, Form, notification } from 'antd';
 import { IoMailOutline, IoMapOutline } from 'react-icons/io5';
 import Link from 'next/link';
 import { AiOutlineUser } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
-// import { useCreateUserMutation } from '@/redux/features/user/userApi';
-import { TfiHeadphone } from 'react-icons/tfi';
+import { useCreateUserMutation } from '@/redux/features/user/userApi';
+import { BsPhone } from 'react-icons/bs';
 
 const RegisterForm = () => {
-      // const [createUser] = useCreateUserMutation();
+      const [createUser] = useCreateUserMutation();
       const router = useRouter();
-      const onFinish = async (values: FormData) => {
-            // console.log('Form Values:', values);
-            // // router.push('/');
-            // const res = await createUser(values).unwrap();
-            // if (res?.success) {
-            // }
+      const onFinish = async (values: any) => {
+            try {
+                  const formData = new FormData();
+                  formData.append('data', JSON.stringify(values));
+
+                  const res = await createUser(formData).unwrap();
+
+                  if (res?.success) {
+                        notification.success({
+                              message: res?.message,
+                        });
+                        localStorage.setItem('verifyEmail', values.email);
+                        router.push('/verify-otp?purpose=register');
+                  }
+            } catch (error) {
+                  notification.error({
+                        message: (error as any).data?.message || 'Internal server error!',
+                  });
+            }
       };
 
       return (
@@ -50,7 +63,7 @@ const RegisterForm = () => {
                               <div className="mb-1">
                                     <p className="text-text-primary my-2">Phone Number</p>
                                     <Form.Item name="phone" rules={[{ required: true, message: 'Please enter your phone number' }]}>
-                                          <Input style={{ height: 48 }} suffix={<TfiHeadphone />} />
+                                          <Input style={{ height: 48 }} suffix={<BsPhone />} />
                                     </Form.Item>
                               </div>
 
@@ -67,7 +80,7 @@ const RegisterForm = () => {
                                           name="password"
                                           rules={[
                                                 { required: true, message: 'Please enter your password' },
-                                                { min: 6, message: 'Password must be at least 6 characters' },
+                                                { min: 8, message: 'Password must be at least 8 characters' },
                                           ]}
                                           hasFeedback
                                     >

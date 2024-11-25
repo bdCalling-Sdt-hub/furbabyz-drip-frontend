@@ -3,7 +3,7 @@ import { Button, Collapse, ConfigProvider } from 'antd';
 import { CgChevronDown } from 'react-icons/cg';
 import DogFoot from '@/assets/images/dogs/foot.png';
 import Image from 'next/image';
-import { MdArrowRightAlt } from 'react-icons/md';
+
 import { useGetFaqsQuery } from '@/redux/features/faq/faqApi';
 
 const FAQ = () => {

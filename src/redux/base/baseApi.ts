@@ -1,6 +1,7 @@
 import { BaseQueryApi, BaseQueryFn, createApi, DefinitionType, FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../store';
 import { logout, setUser } from '../features/auth/authSlice';
+import { TApiResponse } from '@/types';
 export const BASE_URL = 'http://192.168.10.18:5050/api/v1';
 export const IMAGE_URL = 'http://192.168.10.18:5050';
 const baseQuery = fetchBaseQuery({
@@ -18,7 +19,11 @@ const baseQuery = fetchBaseQuery({
       },
 });
 
-const baseQueryWithRefreshToken: BaseQueryFn<FetchArgs, BaseQueryApi, DefinitionType> = async (args, api, extraOptions): Promise<any> => {
+const baseQueryWithRefreshToken: BaseQueryFn<FetchArgs, any, { status: number; data?: TApiResponse<any> }> = async (
+      args,
+      api,
+      extraOptions
+): Promise<any> => {
       let result = await baseQuery(args, api, extraOptions);
 
       if (result?.error?.status === 401) {

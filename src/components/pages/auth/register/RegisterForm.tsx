@@ -1,17 +1,22 @@
 'use client';
 import React from 'react';
-import { Input, Button, Form, ConfigProvider } from 'antd';
+import { Input, Button, Form } from 'antd';
 import { IoMailOutline, IoMapOutline } from 'react-icons/io5';
 import Link from 'next/link';
-import { TiPhoneOutline } from 'react-icons/ti';
 import { AiOutlineUser } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
+// import { useCreateUserMutation } from '@/redux/features/user/userApi';
+import { TfiHeadphone } from 'react-icons/tfi';
 
 const RegisterForm = () => {
+      // const [createUser] = useCreateUserMutation();
       const router = useRouter();
-      const onFinish = (values: FormData) => {
-            console.log('Form Values:', values);
-            router.push('/');
+      const onFinish = async (values: FormData) => {
+            // console.log('Form Values:', values);
+            // // router.push('/');
+            // const res = await createUser(values).unwrap();
+            // if (res?.success) {
+            // }
       };
 
       return (
@@ -24,7 +29,7 @@ const RegisterForm = () => {
                         <Form name="register" onFinish={onFinish} layout="vertical" initialValues={{ remember: true }}>
                               <div className="mb-1">
                                     <p className="text-text-primary my-2">Username</p>
-                                    <Form.Item name="userName" rules={[{ required: true, message: 'Please enter your username' }]}>
+                                    <Form.Item name="name" rules={[{ required: true, message: 'Please enter your username' }]}>
                                           <Input style={{ height: 48 }} suffix={<AiOutlineUser />} />
                                     </Form.Item>
                               </div>
@@ -44,8 +49,8 @@ const RegisterForm = () => {
 
                               <div className="mb-1">
                                     <p className="text-text-primary my-2">Phone Number</p>
-                                    <Form.Item name="contact" rules={[{ required: true, message: 'Please enter your phone number' }]}>
-                                          <Input style={{ height: 48 }} suffix={<TiPhoneOutline />} />
+                                    <Form.Item name="phone" rules={[{ required: true, message: 'Please enter your phone number' }]}>
+                                          <Input style={{ height: 48 }} suffix={<TfiHeadphone />} />
                                     </Form.Item>
                               </div>
 

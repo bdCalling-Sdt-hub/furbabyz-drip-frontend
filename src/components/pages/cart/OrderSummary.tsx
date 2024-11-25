@@ -1,4 +1,4 @@
-import { Button } from 'antd';
+import { Button, Input } from 'antd';
 import { OrderItem } from './OrderItem';
 
 // Order Summary Component
@@ -25,6 +25,13 @@ export const OrderSummary = () => {
                         <div className="flex justify-between items-center mt-2 py-3 border-t border-gray-200">
                               <p className="text-md font-medium text-text-secondary">Total Amount</p>
                               <p className="text-md font-medium text-title">$90.24</p>
+                        </div>
+                        <div>
+                              <Input
+                                    className="w-full"
+                                    placeholder="Enter Discount Code(if any)"
+                                    style={{ height: 56, width: '100%', backgroundColor: '#F5F5F5', border: 'none' }}
+                              />
                         </div>
                   </div>
 

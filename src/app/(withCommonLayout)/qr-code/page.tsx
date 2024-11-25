@@ -1,5 +1,4 @@
 import PageHeader from '@/components/ui/shared/PageHeader';
-import React from 'react';
 import QR from '@/assets/images/others/qr.png';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,7 +13,6 @@ const QRCodePage = () => {
                               <h1 className="text-xl md:text-3xl text-center md:text-start text-secondary font-medium my-4">
                                     Exclusive FurBabyz Drip Deals for West Coast Grooming Clients!
                               </h1>
-
                               <p className="text-text-secondary text-center md:text-start">
                                     Welcome to the exclusive collection for West Coast Grooming Academy customers. We’ve curated a special
                                     line of culture-inspired dog fashion just for you. Shop today and enjoy 15% off your first order when
@@ -40,9 +38,8 @@ const QRCodePage = () => {
                                     </Link>
                               </div>
                         </div>
-
                         <div>
-                              <Image src={QR.src} alt="" height={500} width={5000} />
+                              <Image src={QR.src} alt="QR Code" height={500} width={500} />
                         </div>
                   </div>
             </div>

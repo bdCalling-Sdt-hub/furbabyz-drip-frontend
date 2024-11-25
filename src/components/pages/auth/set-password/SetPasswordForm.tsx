@@ -11,20 +11,20 @@ const SetPasswordForm = () => {
       const onFinish = async (values: FormData) => {
             console.log('Success:', values);
 
-            // try {
-            //       const res = await resetPassword(values).unwrap();
-            //       if (res.success) {
-            //             notification.success({
-            //                   message: res.message,
-            //             });
-            //             localStorage.removeItem('oneTimeToken');
-            //             router.push('/login');
-            //       }
-            // } catch (error: any) {
-            //       notification.error({
-            //             message: error?.data?.message || 'Something went wrong. Please try again.',
-            //       });
-            // }
+            try {
+                  const res = await resetPassword(values).unwrap();
+                  if (res.success) {
+                        notification.success({
+                              message: res.message,
+                        });
+                        localStorage.removeItem('oneTimeToken');
+                        router.push('/login');
+                  }
+            } catch (error: any) {
+                  notification.error({
+                        message: error?.data?.message || 'Something went wrong. Please try again.',
+                  });
+            }
       };
 
       return (
@@ -69,7 +69,7 @@ const SetPasswordForm = () => {
                                                             { required: true, message: 'Please confirm your password' },
                                                             ({ getFieldValue }) => ({
                                                                   validator(_, value) {
-                                                                        if (!value || getFieldValue('password') === value) {
+                                                                        if (!value || getFieldValue('newPassword') === value) {
                                                                               return Promise.resolve();
                                                                         }
                                                                         return Promise.reject(new Error('Passwords do not match!'));

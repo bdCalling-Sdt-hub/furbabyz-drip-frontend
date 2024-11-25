@@ -3,10 +3,11 @@ import React from 'react';
 import { Input, Button, Form, ConfigProvider, notification } from 'antd';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useVerifyEmailMutation } from '@/redux/features/auth/authApi';
+import { useForgetPasswordMutation, useVerifyEmailMutation } from '@/redux/features/auth/authApi';
 
 const OtpVerifyForm = () => {
       const [verifyEmail] = useVerifyEmailMutation();
+      const [forgetPassword] = useForgetPasswordMutation();
       const router = useRouter();
       const searchParams = useSearchParams();
       const purpose = searchParams.get('purpose');
@@ -21,6 +22,7 @@ const OtpVerifyForm = () => {
                         notification.success({
                               message: res?.message,
                         });
+                        console.log(res);
                         localStorage.removeItem('verifyEmail');
                         localStorage.setItem('oneTimeToken', res.data);
 
@@ -35,6 +37,24 @@ const OtpVerifyForm = () => {
                         message: 'Verify Failed',
                         description: error?.data?.message || 'Something went wrong. Please try again.',
                         duration: 3,
+                  });
+            }
+      };
+
+      const handleResentOtp = async () => {
+            try {
+                  const body = {
+                        email: localStorage.getItem('verifyEmail'),
+                  };
+                  const res = await forgetPassword(body).unwrap();
+                  if (res.success) {
+                        notification.success({
+                              message: res.message,
+                        });
+                  }
+            } catch (error: any) {
+                  notification.error({
+                        message: error?.data?.message || 'Failed to resend OTP',
                   });
             }
       };
@@ -88,7 +108,9 @@ const OtpVerifyForm = () => {
                               <div className="mb-3">
                                     <p className="text-center text-gray-600 ">
                                           Didn’t get the Code?
-                                          <button className="text-primary ms-1">Resend code again</button>
+                                          <button onClick={handleResentOtp} className="text-primary ms-1">
+                                                Resend code again
+                                          </button>
                                     </p>
                               </div>
                               <div>

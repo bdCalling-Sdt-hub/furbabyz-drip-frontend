@@ -30,7 +30,7 @@ const authApi = baseApi.injectEndpoints({
                         body: data,
                         headers: {
                               'Content-Type': 'application/json',
-                              Authorization: `Bearer ${localStorage.getItem('oneTimeToken')}`,
+                              Authorization: `${localStorage.getItem('oneTimeToken')}`,
                         },
                   }),
             }),

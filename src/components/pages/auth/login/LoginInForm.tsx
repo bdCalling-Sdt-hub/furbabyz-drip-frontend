@@ -111,7 +111,7 @@ const LoginForm = () => {
                                     </Button>
                               </Form.Item>
 
-                              <Form.Item>
+                              {/* <Form.Item>
                                     <Button
                                           icon={<FcGoogle size={24} />}
                                           shape="round"
@@ -127,7 +127,7 @@ const LoginForm = () => {
                                     >
                                           Continue with Google
                                     </Button>
-                              </Form.Item>
+                              </Form.Item> */}
 
                               <p className="text-center text-gray-600">
                                     Don’t have an Account?{' '}

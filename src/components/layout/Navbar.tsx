@@ -11,9 +11,11 @@ import NavItems from './NavItems';
 import MobileDrawer from './MobileDrawer';
 import { usePathname } from 'next/navigation';
 import { Button } from 'antd';
+import { useAppSelector } from '@/redux/hooks';
 
 const Navbar = () => {
       const [showDrawer, setShowDrawer] = useState(false);
+      const { user } = useAppSelector((state) => state.auth);
       const pathname = usePathname();
       const items = [
             { label: 'Home', path: '/' },
@@ -43,23 +45,26 @@ const Navbar = () => {
                                     {/* <div className="w-14 h-14 flex items-center justify-center rounded-full bg-[#FDF7F8]">
                                           <AiOutlineSearch size={28} />
                                     </div> */}
-                                    <Link href="/login">
-                                          <Button
-                                                shape="round"
-                                                style={{
-                                                      backgroundColor: '#584857',
-                                                      height: 48,
-                                                }}
-                                                type="primary"
-                                          >
-                                                Login
-                                          </Button>
-                                    </Link>
-                                    <Link href={'/accounts'}>
-                                          <div className="w-14 h-14 rounded-full overflow-hidden">
-                                                <Image src={Profile} alt="Profile" width={56} height={56} className="object-cover" />
-                                          </div>
-                                    </Link>
+                                    {user ? (
+                                          <Link href={'/dashboard/accounts'}>
+                                                <div className="w-14 h-14 rounded-full overflow-hidden">
+                                                      <Image src={Profile} alt="Profile" width={56} height={56} className="object-cover" />
+                                                </div>
+                                          </Link>
+                                    ) : (
+                                          <Link href="/login">
+                                                <Button
+                                                      shape="round"
+                                                      style={{
+                                                            backgroundColor: '#584857',
+                                                            height: 48,
+                                                      }}
+                                                      type="primary"
+                                                >
+                                                      Login
+                                                </Button>
+                                          </Link>
+                                    )}
                               </div>
                               <div className="md:hidden">
                                     <AiOutlineMenu

@@ -36,22 +36,22 @@ const DashboardSidebar = () => {
       const sideBarItems = [
             {
                   title: 'Accounts',
-                  href: '/accounts',
+                  href: '/dashboard/accounts',
                   icon: <PiUserCircleThin size={24} />,
             },
             {
                   title: 'Wishlist',
-                  href: '/wishlist',
+                  href: '/dashboard/wishlist',
                   icon: <PiHeartThin size={24} />,
             },
             {
                   title: 'Transactions',
-                  href: '/transactions',
+                  href: '/dashboard/transactions',
                   icon: <PiDatabaseThin size={24} />,
             },
             {
                   title: 'Settings',
-                  href: '/settings',
+                  href: '/dashboard/settings',
                   icon: <PiGearThin size={24} />,
             },
       ];

@@ -8,10 +8,12 @@ import { BsSuitHeart, BsSuitHeartFill } from 'react-icons/bs';
 import CarouselNavigation from '@/components/ui/carousel/CarouselNavigation';
 import Link from 'next/link';
 import { products } from '@/const/const';
+import { TProduct, useGetLimitedAdditionQuery } from '@/redux/features/product/productApi';
+import ProductCard from '@/components/ui/card/ProductCard';
 
 const LimitedEdition = () => {
-      const [wishList, setWishlist] = useState<number[]>([]); // Array of product IDs in the wishlist
       const carouselRef = useRef<any>(null);
+      const { data: limitedProducts } = useGetLimitedAdditionQuery([]);
 
       const settings = {
             dots: false,
@@ -37,11 +39,6 @@ const LimitedEdition = () => {
       };
 
       // Toggle the wishlist for a specific product ID
-      const toggleWishlist = (id: number) => {
-            setWishlist((prevWishlist) =>
-                  prevWishlist.includes(id) ? prevWishlist.filter((itemId) => itemId !== id) : [...prevWishlist, id]
-            );
-      };
 
       return (
             <div className="container relative my-10">
@@ -55,38 +52,8 @@ const LimitedEdition = () => {
                         </button>
                   </div>
                   <Carousel {...settings} ref={carouselRef} className="product-carousel">
-                        {products.map((product) => (
-                              <div key={product.id} className="px-2 my-6">
-                                    <div className="product-card bg-[#FBFBFB] relative h-full rounded-lg overflow-hidden">
-                                          <Image
-                                                src={product.image}
-                                                alt={product.title}
-                                                width={300}
-                                                height={300}
-                                                className="object-contain mx-auto"
-                                          />
-                                          <Link href={`/products/${product.id}`}>
-                                                <div className="p-4 h-full text-start">
-                                                      <h2 className="text-lg text-title font-medium truncate">{product.title}</h2>
-                                                      <p className="text-xl text-primary font-medium">{product.price}</p>
-                                                      <div className="flex items-center justify-start text-yellow-400 mb-2">
-                                                            {[...Array(product.rating)].map((rating, index) => {
-                                                                  return <RxStarFilled key={index} size={16} />;
-                                                            })}
-                                                            {/* <span className="ml-2 text-[12px]">{product.rating}</span> */}
-                                                            <span className="ml-2 text-gray-500">({product.reviews})</span>
-                                                      </div>
-                                                </div>
-                                          </Link>
-                                          <div onClick={() => toggleWishlist(product.id)}>
-                                                {wishList.includes(product.id) ? (
-                                                      <BsSuitHeartFill className="absolute top-6 right-6 text-red-500 text-2xl cursor-pointer" />
-                                                ) : (
-                                                      <BsSuitHeart className="absolute top-6 right-6 text-black text-2xl hover:text-red-500 cursor-pointer" />
-                                                )}
-                                          </div>
-                                    </div>
-                              </div>
+                        {limitedProducts?.map((product: TProduct) => (
+                              <ProductCard key={product._id} product={product} />
                         ))}
                   </Carousel>
                   <CarouselNavigation key={'carousel'} next={next} prev={prev} />

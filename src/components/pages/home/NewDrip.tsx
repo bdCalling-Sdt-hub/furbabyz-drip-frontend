@@ -1,17 +1,17 @@
 'use client';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Carousel } from 'antd';
-import Image from 'next/image';
-
 import CarouselNavigation from '@/components/ui/carousel/CarouselNavigation';
 import Link from 'next/link';
 import { MdArrowRightAlt } from 'react-icons/md';
-import { products, settings } from '@/const/const';
+import { settings } from '@/const/const';
+import { useGetNewArrivalsQuery } from '@/redux/features/product/productApi';
 
-import { BsSuitHeart, BsSuitHeartFill } from 'react-icons/bs';
+import ProductCard from '@/components/ui/card/ProductCard';
 
 const NewDrip = () => {
-      const [wishList, setWishlist] = useState<number[]>([]); // Store wishlist as an array of IDs
+      const { data: products } = useGetNewArrivalsQuery([]);
+
       const carouselRef = useRef<any>(null);
 
       const next = () => {
@@ -22,12 +22,44 @@ const NewDrip = () => {
             carouselRef.current.prev();
       };
 
-      // Toggle wishlist for a specific product ID
-      const toggleWishlist = (id: number) => {
-            setWishlist((prevWishlist) =>
-                  prevWishlist.includes(id) ? prevWishlist.filter((itemId) => itemId !== id) : [...prevWishlist, id]
-            );
-      };
+      //       if (!user) {
+      //             notification.error({
+      //                   message: 'Please login to add wishlist',
+      //             });
+      //             return;
+      //       }
+
+      //       try {
+      //             if (isFavorite) {
+      //                   // Remove from favorites
+      //                   const res = await removeFavorite(space._id).unwrap();
+
+      //                   if (res.success) {
+      //                         notification.success({
+      //                               message: res.message,
+      //                               placement: 'topRight',
+      //                               duration: 5,
+      //                         });
+      //                   }
+      //             } else {
+      //                   const res = await addFavorite({
+      //                         spaceId: space._id,
+      //                   }).unwrap();
+
+      //                   if (res.success) {
+      //                         notification.success({
+      //                               message: res.message,
+      //                               placement: 'topRight',
+      //                               duration: 5,
+      //                         });
+      //                   }
+      //             }
+      //       } catch (error: any) {
+      //             notification.error({
+      //                   message: error?.message || 'Failed to update favorite',
+      //             });
+      //       }
+      // };
 
       return (
             <div className="container relative my-10">
@@ -41,31 +73,8 @@ const NewDrip = () => {
                         </button>
                   </div>
                   <Carousel {...settings} ref={carouselRef} className="product-carousel">
-                        {products.map((product) => (
-                              <div key={product.id} className="px-2 my-6">
-                                    <div className="product-card bg-[#FBFBFB] relative h-full w-full rounded-lg overflow-hidden">
-                                          <Image
-                                                src={product.image}
-                                                alt={product.title}
-                                                width={300}
-                                                height={300}
-                                                className="object-contain mx-auto"
-                                          />
-                                          <Link href={`/products/${product.id}`}>
-                                                <div className="p-4 h-full text-start">
-                                                      <h2 className="text-lg text-title font-medium">{product.title}</h2>
-                                                      <p className="text-xl text-primary font-medium">{product.price}</p>
-                                                </div>
-                                          </Link>
-                                          <div onClick={() => toggleWishlist(product.id)}>
-                                                {wishList.includes(product.id) ? (
-                                                      <BsSuitHeartFill className="absolute top-6 right-6 text-red-500 text-2xl cursor-pointer" />
-                                                ) : (
-                                                      <BsSuitHeart className="absolute top-6 right-6 text-black text-2xl hover:text-red-500 cursor-pointer" />
-                                                )}
-                                          </div>
-                                    </div>
-                              </div>
+                        {products?.map((product) => (
+                              <ProductCard product={product} key={product._id} />
                         ))}
                   </Carousel>
                   <CarouselNavigation key={'carousel'} next={next} prev={prev} />

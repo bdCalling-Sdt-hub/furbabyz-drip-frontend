@@ -1,5 +1,5 @@
 import { baseApi } from '@/redux/base/baseApi';
-import { TApiResponse } from '@/types';
+import { TApiResponse, TApiResponseWithPagination } from '@/types';
 
 export interface ProductCategory {
       _id: string;
@@ -25,6 +25,20 @@ export interface TProduct {
 
 const productApi = baseApi.injectEndpoints({
       endpoints: (builder) => ({
+            getNewArrivals: builder.query({
+                  query: () => ({
+                        url: '/product',
+                        method: 'GET',
+                  }),
+                  transformResponse: (response: TApiResponseWithPagination<TProduct>) => response.data.result,
+            }),
+            getLimitedAddition: builder.query({
+                  query: () => ({
+                        url: '/product?category=Limited-Edition-Collections',
+                        method: 'GET',
+                  }),
+                  transformResponse: (response: TApiResponseWithPagination<TProduct>) => response.data.result,
+            }),
             getBestSellingProduct: builder.query({
                   query: () => ({
                         url: '/product/get-best-selling',
@@ -35,4 +49,4 @@ const productApi = baseApi.injectEndpoints({
       }),
 });
 
-export const { useGetBestSellingProductQuery } = productApi;
+export const { useGetNewArrivalsQuery, useGetBestSellingProductQuery, useGetLimitedAdditionQuery } = productApi;

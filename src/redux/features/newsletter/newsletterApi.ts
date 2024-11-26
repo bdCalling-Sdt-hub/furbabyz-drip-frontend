@@ -4,7 +4,7 @@ const newsletterApi = baseApi.injectEndpoints({
       endpoints: (builder) => ({
             subscribe: builder.mutation({
                   query: (data) => ({
-                        url: '/newsletter/subscribe',
+                        url: '/subscriber/create-subscriber',
                         method: 'POST',
                         body: data,
                   }),

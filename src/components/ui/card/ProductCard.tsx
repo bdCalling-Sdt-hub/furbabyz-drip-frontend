@@ -70,7 +70,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
                               {isFavorite ? (
                                     <GoHeartFill className="absolute top-6 right-6 text-red-500 text-3xl cursor-pointer" />
                               ) : (
-                                    <GoHeart className="absolute top-6 right-6 text-gray-400 text-3xl cursor-pointer" />
+                                    <GoHeart className="absolute top-6 right-6 text-red-400 text-3xl cursor-pointer" />
                               )}
                         </div>
                   </div>

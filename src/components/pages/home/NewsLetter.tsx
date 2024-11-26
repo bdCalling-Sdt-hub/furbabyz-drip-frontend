@@ -22,11 +22,12 @@ const NewsLetter = () => {
             }
 
             try {
-                  const res = await subscribe(email).unwrap();
+                  const res = await subscribe({ email }).unwrap();
                   if (res.success) {
                         notification.success({
                               message: res.message,
                         });
+                        setEmail('');
                   }
             } catch (error) {
                   notification.error({
@@ -59,6 +60,7 @@ const NewsLetter = () => {
                                     <div className="w-full md:w-[300px]">
                                           <Input
                                                 onChange={(e) => setEmail(e.target.value as string)}
+                                                value={email as string}
                                                 className="w-full"
                                                 placeholder="Your email"
                                                 style={{ height: 56, width: '100%', backgroundColor: '#F5F5F5', border: 'none' }}

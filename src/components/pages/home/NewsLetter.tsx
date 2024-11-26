@@ -1,8 +1,40 @@
-import React from 'react';
-import { Input, Button } from 'antd';
+'use client';
+import React, { SetStateAction, useState } from 'react';
+import { Input, Button, notification } from 'antd';
 import NewsLetterImage from '@/assets/images/others/news-letter.png';
 import Image from 'next/image';
+import { useSubscribeMutation } from '@/redux/features/newsletter/newsletterApi';
 const NewsLetter = () => {
+      const [email, setEmail] = useState<SetStateAction<null | string>>(null);
+      const [error, setError] = useState('');
+      const [subscribe] = useSubscribeMutation();
+
+      const handleSubscribe = async () => {
+            if (!email) {
+                  setError('Please enter your email');
+                  return;
+            }
+
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email as string)) {
+                  setError('Please enter a valid email address');
+                  return;
+            }
+
+            try {
+                  const res = await subscribe(email).unwrap();
+                  if (res.success) {
+                        notification.success({
+                              message: res.message,
+                        });
+                  }
+            } catch (error) {
+                  notification.error({
+                        message: (error as any).data?.message || 'Something went wrong. Please try again.',
+                  });
+            }
+      };
+
       return (
             <div className="container py-10">
                   <div className="grid grid-cols-1 md:grid-cols-2 items-center justify-center border rounded-[32px] p-8 w-full mx-auto">
@@ -26,6 +58,7 @@ const NewsLetter = () => {
                               <div className="flex flex-wrap gap-2 items-center">
                                     <div className="w-full md:w-[300px]">
                                           <Input
+                                                onChange={(e) => setEmail(e.target.value as string)}
                                                 className="w-full"
                                                 placeholder="Your email"
                                                 style={{ height: 56, width: '100%', backgroundColor: '#F5F5F5', border: 'none' }}
@@ -33,6 +66,7 @@ const NewsLetter = () => {
                                     </div>
                                     <div className="w-full md:w-[120px]">
                                           <Button
+                                                onClick={handleSubscribe}
                                                 style={{
                                                       width: '100%',
                                                 }}
@@ -43,6 +77,7 @@ const NewsLetter = () => {
                                           </Button>
                                     </div>
                               </div>
+                              <div>{error && <p className="text-red-500 duration-200 mt-2">{error}</p>}</div>
                         </div>
                   </div>
             </div>

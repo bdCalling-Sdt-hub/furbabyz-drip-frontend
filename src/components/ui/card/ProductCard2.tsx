@@ -6,9 +6,11 @@ import { notification } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { BsSuitHeartFill } from 'react-icons/bs';
 import { GoHeart, GoHeartFill } from 'react-icons/go';
+import { RxStarFilled } from 'react-icons/rx';
 
-const ProductCard = ({ product }: { product: TProduct }) => {
+const ProductCard2 = ({ product }: { product: TProduct }) => {
       const [addWishlist] = useAddWishlistMutation();
       const [removeWishlist] = useRemoveWishlistMutation();
       const { user } = useAppSelector((state) => state.auth);
@@ -49,22 +51,25 @@ const ProductCard = ({ product }: { product: TProduct }) => {
                   });
             }
       };
-
       return (
-            <div key={product?._id} className="px-2 my-6 h-full">
-                  <div className="product-card bg-[#FBFBFB] relative h-full w-full rounded-lg overflow-hidden">
+            <div key={product._id} className="px-2">
+                  <div className="product-card bg-[#FBFBFB] relative h-full rounded-lg overflow-hidden">
                         <Image
-                              src={`${IMAGE_URL}/${product.image[0]}`}
+                              src={`${IMAGE_URL}/${product?.image[0]}`}
                               alt={product?.name}
                               width={300}
                               height={300}
-                              className="object-cover mx-auto w-full h-[266px]"
+                              className="object-cover w-full h-[266px] mx-auto"
                         />
-                        <Link href={`/products/${product._id}`}>
-                              <div className="p-4 h-full text-start">
-                                    <h2 className="text-lg text-title font-medium">{product?.name}</h2>
-                                    <p className="text-xl text-primary font-medium">$ {product?.price.toFixed(2)}</p>
+                        <Link href={`/products/${product._id}`} className="p-4 h-full text-center">
+                              <h2 className="text-lg text-title font-semibold">{product?.name}</h2>
+                              <div className="flex items-center justify-center text-yellow-500 mb-2">
+                                    <RxStarFilled size={16} />
+                                    <span className="ml-2 text-[12px]">{product?.rating ? product.rating : 0} / 5</span>
+                                    <span className="ml-2 text-gray-500">({product?.count})</span>
                               </div>
+
+                              <p className="text-xl font-medium">$ {product?.price.toFixed(2)}</p>
                         </Link>
                         <div onClick={handleToggleWishlist}>
                               {isFavorite ? (
@@ -78,4 +83,4 @@ const ProductCard = ({ product }: { product: TProduct }) => {
       );
 };
 
-export default ProductCard;
+export default ProductCard2;

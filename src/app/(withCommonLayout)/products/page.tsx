@@ -2,7 +2,7 @@
 
 import CategoryBar from '@/components/pages/products/CategoryBar';
 import FilterSection from '@/components/pages/products/FilterSection';
-import ProductCard from '@/components/ui/card/ProductCard';
+import ProductCard2 from '@/components/ui/card/ProductCard2';
 import PageHeader from '@/components/ui/shared/PageHeader';
 import { IMAGE_URL } from '@/redux/base/baseApi';
 import { useGetFilterProductsQuery } from '@/redux/features/product/productApi';
@@ -53,7 +53,7 @@ const ProductsPage = () => {
                                     <>
                                           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
                                                 {productData?.data.map((product) => (
-                                                      <ProductCard product={product} key={product?._id} />
+                                                      <ProductCard2 product={product} key={product._id} />
                                                 ))}
                                           </div>
 

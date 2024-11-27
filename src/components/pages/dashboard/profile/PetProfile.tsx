@@ -60,9 +60,9 @@ const PetProfile = () => {
                         breed: firstProfile.breed,
                         preference: firstProfile.preference,
                         weight: firstProfile.weight,
-                        neckLength: firstProfile.neck,
-                        collarToTailLength: firstProfile.coller,
-                        chestLength: firstProfile.chest,
+                        neck: firstProfile.neck,
+                        coller: firstProfile.coller,
+                        chest: firstProfile.chest,
                   });
             }
       }, [petProfiles, form]);
@@ -107,23 +107,19 @@ const PetProfile = () => {
                                     <Form.Item name="weight" label={<p className="text-text-primary">Weight</p>} className="mb-4">
                                           <Input type="number" size="large" placeholder="Enter in lbs" />
                                     </Form.Item>
-                                    <Form.Item name="neckLength" label={<p className="text-text-primary">Neck Length</p>} className="mb-4">
+                                    <Form.Item name="neck" label={<p className="text-text-primary">Neck Length</p>} className="mb-4">
                                           <Input type="number" size="large" placeholder="Enter in inches" />
                                     </Form.Item>
                               </div>
                               <div className="grid grid-cols-2 gap-5">
                                     <Form.Item
-                                          name="collarToTailLength"
+                                          name="coller"
                                           label={<p className="text-text-primary">Collar to Tail Length</p>}
                                           className="mb-4"
                                     >
                                           <Input type="number" size="large" placeholder="Enter in inches" />
                                     </Form.Item>
-                                    <Form.Item
-                                          name="chestLength"
-                                          label={<p className="text-text-primary">Chest Length</p>}
-                                          className="mb-4"
-                                    >
+                                    <Form.Item name="chest" label={<p className="text-text-primary">Chest Length</p>} className="mb-4">
                                           <Input type="number" size="large" placeholder="Enter in inches" />
                                     </Form.Item>
                               </div>
@@ -172,7 +168,7 @@ const PetProfile = () => {
                         )}
 
                         {/* Profile Image Uploader */}
-                        <ProfileImageUploader selectedProfile={selectedProfile!} />
+                        <ProfileImageUploader selectedProfile={selectedProfile!} profileType="pet" />
                   </div>
 
                   {/* Modal for Adding New Profile */}

@@ -1,13 +1,15 @@
 'use client';
 import Image from 'next/image';
 import React, { useState } from 'react';
-import ProfileImage from '@/assets/images/dashboard/profile.png';
-import PetProfileImage from '@/assets/images/dashboard/pet.png';
 import MyProfile from '@/components/pages/dashboard/profile/MyProfile';
 import PetProfile from '@/components/pages/dashboard/profile/PetProfile';
+import { useMyProfileQuery } from '@/redux/features/user/userApi';
+
+import { getImageUrl } from '@/utils/getImageUrl';
 
 const AccountsPage = () => {
       const [activeTab, setActiveTab] = useState('myProfile');
+      const { data: myProfile } = useMyProfileQuery([]);
 
       return (
             <div>
@@ -16,11 +18,11 @@ const AccountsPage = () => {
                               <Image
                                     className="size-[40px] rounded-full"
                                     alt="profile.png"
-                                    src={activeTab === 'myProfile' ? ProfileImage.src : PetProfileImage.src}
+                                    src={getImageUrl(myProfile?.image)}
                                     width={400}
                                     height={400}
                               />
-                              <h1 className="text-title text-xs  md:text-xl">Hello Tiffany !</h1>
+                              <h1 className="text-title text-xs  md:text-xl">Hello {myProfile?.name} !</h1>
                         </div>
                         <div className="flex items-center justify-center space-x-1 bg-[#F9F9F9] p-1 rounded-full w-52 ">
                               <button
@@ -41,7 +43,7 @@ const AccountsPage = () => {
                               </button>
                         </div>
                   </div>
-                  {activeTab === 'myProfile' ? <MyProfile /> : <PetProfile />}
+                  {activeTab === 'myProfile' ? <MyProfile myProfile={myProfile} /> : <PetProfile />}
             </div>
       );
 };

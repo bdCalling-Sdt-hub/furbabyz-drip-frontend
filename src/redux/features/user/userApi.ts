@@ -8,6 +8,8 @@ export interface TUser {
       phone: string;
       address: string;
       status: string;
+      postCode: string;
+      country: string;
       verified: boolean;
       image: string;
       createdAt: string;
@@ -23,6 +25,15 @@ const userApi = baseApi.injectEndpoints({
                         method: 'POST',
                         body: data,
                   }),
+                  invalidatesTags: ['User'],
+            }),
+            updateUserProfile: builder.mutation({
+                  query: (data) => ({
+                        url: '/user/update-profile',
+                        method: 'PATCH',
+                        body: data,
+                  }),
+                  invalidatesTags: ['User'],
             }),
             myProfile: builder.query({
                   query: () => ({
@@ -30,8 +41,9 @@ const userApi = baseApi.injectEndpoints({
                         method: 'GET',
                   }),
                   transformResponse: (response: any) => response.data,
+                  providesTags: ['User'],
             }),
       }),
 });
 
-export const { useCreateUserMutation, useMyProfileQuery } = userApi;
+export const { useCreateUserMutation, useMyProfileQuery, useUpdateUserProfileMutation } = userApi;

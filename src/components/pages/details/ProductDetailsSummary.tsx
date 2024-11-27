@@ -1,12 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button, Select, Input, Radio, ConfigProvider } from 'antd';
+import { Button, Select, Input } from 'antd';
 import { AiOutlineHeart } from 'react-icons/ai';
+import { TProduct } from '@/redux/features/product/productApi';
 
 const { Option } = Select;
 
-const ProductDetailsSummary = () => {
+const ProductDetailsSummary = ({ product }: { product: TProduct }) => {
       const [unit, setUnit] = useState('cm');
       const [activeCategory, setActiveCategory] = useState('New Arrivals');
       const categories = ['X-Small', 'Small', 'Medium', 'Large', 'X-Large', 'XX-Large'];
@@ -16,8 +17,8 @@ const ProductDetailsSummary = () => {
                   {/* Title and Price Section */}
                   <div className="flex justify-between items-start">
                         <div>
-                              <h1 className="text-2xl text-[#2E2E2E] font-semibold">Comfy Dog Sweater</h1>
-                              <p className="text-2xl text-title font-medium mt-1">$5.32</p>
+                              <h1 className="text-2xl text-[#2E2E2E] font-semibold">{product?.name}</h1>
+                              <p className="text-2xl text-title font-medium mt-1">${product?.price}</p>
                         </div>
                         <button>
                               <AiOutlineHeart size={30} />

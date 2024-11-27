@@ -2,6 +2,7 @@
 
 import CategoryBar from '@/components/pages/products/CategoryBar';
 import FilterSection from '@/components/pages/products/FilterSection';
+import ProductCard from '@/components/ui/card/ProductCard';
 import PageHeader from '@/components/ui/shared/PageHeader';
 import { IMAGE_URL } from '@/redux/base/baseApi';
 import { useGetFilterProductsQuery } from '@/redux/features/product/productApi';
@@ -22,7 +23,7 @@ const ProductsPage = () => {
             { name: 'category', value: category },
             { name: productType, value: (productType == 'newProduct' && true) || (productType == 'bestSellingProduct' && 5) },
             { name: 'size', value: size },
-            { name: 'color', value: color },
+            { name: 'colors', value: color },
             { name: 'gender', value: gender },
             { name: 'searchTerm', value: search },
             { name: 'page', value: currentPage },
@@ -52,35 +53,7 @@ const ProductsPage = () => {
                                     <>
                                           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
                                                 {productData?.data.map((product) => (
-                                                      <div key={product._id} className="px-2">
-                                                            <div className="product-card bg-[#FBFBFB] relative h-full rounded-lg overflow-hidden">
-                                                                  <Image
-                                                                        src={`${IMAGE_URL}/${product?.image[0]}`}
-                                                                        alt={product?.name}
-                                                                        width={300}
-                                                                        height={300}
-                                                                        className="object-cover w-full h-[266px] mx-auto"
-                                                                  />
-                                                                  <Link
-                                                                        href={`/products/${product._id}`}
-                                                                        className="p-4 h-full text-center"
-                                                                  >
-                                                                        <h2 className="text-lg text-title font-semibold">
-                                                                              {product?.name}
-                                                                        </h2>
-                                                                        <div className="flex items-center justify-center text-yellow-500 mb-2">
-                                                                              <RxStarFilled size={16} />
-                                                                              <span className="ml-2 text-[12px]">
-                                                                                    {product?.rating ? product.rating : 0} / 5
-                                                                              </span>
-                                                                              <span className="ml-2 text-gray-500">({product?.count})</span>
-                                                                        </div>
-
-                                                                        <p className="text-xl font-medium">$ {product?.price}</p>
-                                                                  </Link>
-                                                                  <BsSuitHeartFill className="absolute top-6 right-6 text-gray-500 text-2xl hover:text-[#ff5252]" />
-                                                            </div>
-                                                      </div>
+                                                      <ProductCard product={product} key={product?._id} />
                                                 ))}
                                           </div>
 

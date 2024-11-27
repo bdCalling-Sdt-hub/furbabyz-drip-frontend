@@ -68,9 +68,9 @@ const ProductCard = ({ product }: { product: TProduct }) => {
                         </Link>
                         <div onClick={handleToggleWishlist}>
                               {isFavorite ? (
-                                    <GoHeartFill className="absolute top-6 right-6 text-[#D69CA5] text-3xl cursor-pointer" />
+                                    <GoHeartFill className="absolute top-6 right-6 text-yellow-400 text-3xl cursor-pointer" />
                               ) : (
-                                    <GoHeart className="absolute top-6 right-6 text-[#D69CA5] text-3xl cursor-pointer" />
+                                    <GoHeart className="absolute top-6 right-6 text-yellow-400 text-3xl cursor-pointer" />
                               )}
                         </div>
                   </div>

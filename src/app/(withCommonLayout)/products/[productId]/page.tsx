@@ -1,28 +1,7 @@
-import DetailsSlider from '@/components/pages/details/DetailsSlider';
-import PaymentOptions from '@/components/pages/details/PaymentOption';
-import ProductDetailsSummary from '@/components/pages/details/ProductDetailsSummary';
-import SimilarProduct from '@/components/pages/details/SimilarProduct';
-import PageHeader from '@/components/ui/shared/PageHeader';
-import React from 'react';
+import ProductDetailsComponent from '@/components/pages/details/ProductDetails';
 
-const ProductDetails = () => {
-      return (
-            <div className="container">
-                  <PageHeader />
-                  <div className="grid grid-cols-1  gap-6   md:grid-cols-2">
-                        <div>
-                              <DetailsSlider />
-                        </div>
-                        <div>
-                              <ProductDetailsSummary />
-                              <PaymentOptions />
-                        </div>
-                  </div>
-                  <div>
-                        <SimilarProduct />
-                  </div>
-            </div>
-      );
+const ProductDetails = ({ params }: { params: { productId: string } }) => {
+      return <ProductDetailsComponent id={params.productId} />;
 };
 
 export default ProductDetails;

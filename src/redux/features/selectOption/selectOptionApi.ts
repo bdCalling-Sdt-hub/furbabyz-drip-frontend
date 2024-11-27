@@ -12,7 +12,7 @@ const selectOptionApi = baseApi.injectEndpoints({
             }),
             getColors: build.query({
                   query: () => ({
-                        url: '/     ',
+                        url: '/colour/get-colours',
                         method: 'GET',
                   }),
 
@@ -21,4 +21,4 @@ const selectOptionApi = baseApi.injectEndpoints({
       }),
 });
 
-export const { useGetCategoriesQuery } = selectOptionApi;
+export const { useGetCategoriesQuery, useGetColorsQuery } = selectOptionApi;

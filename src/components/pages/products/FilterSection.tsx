@@ -5,6 +5,7 @@ import { RxCross2, RxPlus } from 'react-icons/rx';
 import { CgChevronDown } from 'react-icons/cg';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { setProductType, setSize, setColor, setGender, setSearch } from '@/redux/features/filter/filterSlice';
+import { useGetColorsQuery } from '@/redux/features/selectOption/selectOptionApi';
 
 interface FilterSectionProps {
       title: string;
@@ -53,7 +54,7 @@ const FilterPanel = () => {
       // Redux dispatch and selector
       const dispatch = useAppDispatch();
       const { productType, size, color, gender, search } = useAppSelector((state) => state.filter);
-
+      const { data: colorsData } = useGetColorsQuery([]);
       // Local state for dropdown visibility
       const [isSizeOpen, setIsSizeOpen] = useState(false);
       const [isColorOpen, setIsColorOpen] = useState(false);
@@ -66,6 +67,7 @@ const FilterPanel = () => {
       ];
 
       const sizes = [
+            { label: 'All', value: '' },
             { label: 'X-Small', value: 'XS' },
             { label: 'Small', value: 'S' },
             { label: 'Medium', value: 'M' },
@@ -75,13 +77,17 @@ const FilterPanel = () => {
       ];
 
       const colors = [
-            { label: 'Solid Color', value: 'solid_color' },
-            { label: 'Full Black', value: 'full_black' },
-            { label: 'Colorful', value: 'colorful' },
-            { label: 'Graffiti', value: 'graffiti' },
+            { label: 'All', value: '' },
+            ...(colorsData
+                  ? colorsData?.map((color: { colourName: string }) => ({
+                          label: color.colourName.replace(/-/g, ' '), // Replace hyphens with spaces
+                          value: color.colourName,
+                    }))
+                  : []),
       ];
 
       const genders = [
+            { label: 'All', value: '' },
             { label: 'Female', value: 'female' },
             { label: 'Male', value: 'male' },
       ];

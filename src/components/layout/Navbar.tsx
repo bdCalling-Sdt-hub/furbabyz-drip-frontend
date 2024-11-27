@@ -2,7 +2,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from '@/assets/images/logo.svg';
-import Profile from '@/assets/images/profile.svg';
 
 import { AiOutlineMenu, AiOutlineShoppingCart } from 'react-icons/ai';
 import { useState } from 'react';
@@ -21,7 +20,7 @@ const Navbar = () => {
       const { data: profile } = useMyProfileQuery(undefined, {
             skip: !user,
       });
-      console.log(profile);
+      // console.log(profile);
       const pathname = usePathname();
       const items = [
             { label: 'Home', path: '/' },

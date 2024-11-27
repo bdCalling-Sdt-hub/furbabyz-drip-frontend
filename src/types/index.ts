@@ -20,5 +20,5 @@ export type TApiResponseWithPagination<T> = {
 
 export type TQueryParams = {
       name: string;
-      value: string | number;
+      value: string | number | boolean | null;
 };

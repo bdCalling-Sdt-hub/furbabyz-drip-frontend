@@ -1,14 +1,16 @@
 'use client';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { RxCross2, RxPlus } from 'react-icons/rx';
 import { CgChevronDown } from 'react-icons/cg';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { setProductType, setSize, setColor, setGender, setSearch } from '@/redux/features/filter/filterSlice';
 
 interface FilterSectionProps {
       title: string;
-      options: string[];
+      options: { label: string; value: string }[]; // Make sure options is an array of objects
       activeOption: string | null;
-      setActiveOption: Dispatch<SetStateAction<string>>;
+      setActiveOption: (option: string) => void;
       isOpen: boolean;
       toggleOpen: () => void;
 }
@@ -32,14 +34,14 @@ const FilterSection = ({ title, options, activeOption, setActiveOption, isOpen, 
                         {options.map((option, index) => (
                               <button
                                     key={index}
-                                    onClick={() => setActiveOption(option)}
+                                    onClick={() => setActiveOption(option.value)}
                                     className={`px-4 py-2 rounded-[8px] ${
-                                          activeOption === option
+                                          activeOption === option.value
                                                 ? 'bg-[#31A2FF] border text-white border-transparent'
                                                 : 'bg-transparent border border-[#606060]'
                                     }`}
                               >
-                                    {option}
+                                    {option.label}
                               </button>
                         ))}
                   </div>
@@ -48,27 +50,80 @@ const FilterSection = ({ title, options, activeOption, setActiveOption, isOpen, 
 );
 
 const FilterPanel = () => {
-      const [activeCategory, setActiveCategory] = useState('New Arrivals');
-      const [activeSize, setActiveSize] = useState('');
-      const [activeColor, setActiveColor] = useState('');
-      const [activeGender, setActiveGender] = useState('');
+      // Redux dispatch and selector
+      const dispatch = useAppDispatch();
+      const { productType, size, color, gender, search } = useAppSelector((state) => state.filter);
+
+      // Local state for dropdown visibility
       const [isSizeOpen, setIsSizeOpen] = useState(false);
       const [isColorOpen, setIsColorOpen] = useState(false);
       const [isGenderOpen, setIsGenderOpen] = useState(false);
 
-      const categories = ['New Arrivals', 'Best Sellers'];
-      const sizes = ['X-Small', 'Small', 'Medium', 'Large', 'X-Large', 'XX-Large'];
-      const colors = ['Solid Color', 'Full Black', 'Colorful', 'Graffiti'];
-      const genders = ['Female', 'Male'];
+      // Filter options
+      const categories = [
+            { label: 'New Arrivals', value: 'newProduct' },
+            { label: 'Best Sellers', value: 'bestSellingProduct' },
+      ];
+
+      const sizes = [
+            { label: 'X-Small', value: 'XS' },
+            { label: 'Small', value: 'S' },
+            { label: 'Medium', value: 'M' },
+            { label: 'Large', value: 'L' },
+            { label: 'X-Large', value: 'XL' },
+            { label: 'XX-Large', value: 'XXL' },
+      ];
+
+      const colors = [
+            { label: 'Solid Color', value: 'solid_color' },
+            { label: 'Full Black', value: 'full_black' },
+            { label: 'Colorful', value: 'colorful' },
+            { label: 'Graffiti', value: 'graffiti' },
+      ];
+
+      const genders = [
+            { label: 'Female', value: 'female' },
+            { label: 'Male', value: 'male' },
+      ];
+
+      // Handlers for setting active filter values via Redux
+
+      const handleProductTypeChange = (categoryValue: string) => {
+            if (productType === categoryValue) {
+                  // If the clicked category is already selected, deselect it
+                  dispatch(setProductType('')); // or use `null` if needed
+            } else {
+                  // Otherwise, select the clicked category
+                  dispatch(setProductType(categoryValue));
+            }
+      };
+
+      const handleSizeChange = (newSize: string) => {
+            dispatch(setSize(newSize));
+      };
+
+      const handleColorChange = (newColor: string) => {
+            dispatch(setColor(newColor));
+      };
+
+      const handleGenderChange = (newGender: string) => {
+            dispatch(setGender(newGender));
+      };
+
+      const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            dispatch(setSearch(event.target.value));
+      };
 
       return (
-            <div className="">
+            <div>
                   {/* Search Input */}
                   <div className="mb-4">
                         <div className="relative">
                               <FiSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
                               <input
                                     type="text"
+                                    value={search}
+                                    onChange={handleSearchChange}
                                     placeholder="Search by name"
                                     className="w-full h-14 bg-gray-100 rounded-3xl pl-12 pr-4 text-lg focus:outline-none"
                               />
@@ -80,13 +135,15 @@ const FilterPanel = () => {
                         {categories.map((category, index) => (
                               <button
                                     key={index}
-                                    onClick={() => setActiveCategory(category)}
+                                    onClick={() => handleProductTypeChange(category.value)}
                                     className={`flex justify-between items-center py-2 px-4 rounded-lg ${
-                                          activeCategory === category ? 'bg-[#31A2FF] text-white' : 'border border-gray-400 text-gray-700'
+                                          productType === category.value
+                                                ? 'bg-[#31A2FF] text-white'
+                                                : 'border border-gray-400 text-gray-700'
                                     }`}
                               >
-                                    {category}
-                                    {activeCategory === category ? <RxCross2 size={20} /> : <RxPlus size={20} />}
+                                    {category.label}
+                                    {productType === category.value ? <RxCross2 size={20} /> : <RxPlus size={20} />}
                               </button>
                         ))}
                   </div>
@@ -95,8 +152,8 @@ const FilterPanel = () => {
                   <FilterSection
                         title="SIZE"
                         options={sizes}
-                        activeOption={activeSize}
-                        setActiveOption={setActiveSize}
+                        activeOption={size || ''}
+                        setActiveOption={handleSizeChange}
                         isOpen={isSizeOpen}
                         toggleOpen={() => setIsSizeOpen(!isSizeOpen)}
                   />
@@ -105,8 +162,8 @@ const FilterPanel = () => {
                   <FilterSection
                         title="COLOR"
                         options={colors}
-                        activeOption={activeColor}
-                        setActiveOption={setActiveColor}
+                        activeOption={color || ''}
+                        setActiveOption={handleColorChange}
                         isOpen={isColorOpen}
                         toggleOpen={() => setIsColorOpen(!isColorOpen)}
                   />
@@ -115,8 +172,8 @@ const FilterPanel = () => {
                   <FilterSection
                         title="GENDER"
                         options={genders}
-                        activeOption={activeGender}
-                        setActiveOption={setActiveGender}
+                        activeOption={gender || ''}
+                        setActiveOption={handleGenderChange}
                         isOpen={isGenderOpen}
                         toggleOpen={() => setIsGenderOpen(!isGenderOpen)}
                   />

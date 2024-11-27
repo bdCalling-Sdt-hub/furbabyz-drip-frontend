@@ -18,9 +18,10 @@ export interface TProduct {
       gender: string;
       status: string;
       createdAt: string;
-
+      features: string[];
       rating: number;
       count: string;
+      description: string;
 }
 
 const productApi = baseApi.injectEndpoints({

@@ -127,7 +127,7 @@ const DetailsSlider: React.FC<DetailsSliderProps> = ({ product }) => {
                         <h1 className="text-title font-medium text-lg">Description</h1>
                         <p className="text-text-secondary">
                               {/* Need this description dynamic*/}
-                              {product?.decription ||
+                              {product?.description ||
                                     'Let your pet wear their swag loud and proud in the FurBabyz Graffiti Hoodie. Designed with vibrant colors and bold streetwear graphics, this hoodie is perfect for pets who love making a statement. Made with soft, durable fabric, it provides warmth and comfort for those cooler days at the park.'}
                         </p>
                   </div>

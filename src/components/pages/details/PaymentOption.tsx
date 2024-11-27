@@ -5,7 +5,7 @@ import React from 'react';
 
 const PaymentOptions = () => {
       return (
-            <div className="border flex flex-col gap-4 my-6 mx-auto p-6 text-center">
+            <div className=" flex flex-col gap-4 my-6 mx-auto p-6 text-center">
                   <Button
                         shape="round"
                         style={{
@@ -19,7 +19,7 @@ const PaymentOptions = () => {
                   >
                         Add to Cart
                   </Button>
-                  <Button
+                  {/* <Button
                         shape="round"
                         style={{
                               backgroundColor: '#635BFF',
@@ -31,9 +31,9 @@ const PaymentOptions = () => {
                         type="primary"
                   >
                         Buy now with Stripe
-                  </Button>
+                  </Button> */}
 
-                  <p className="mt-4 text-title text-sm font-medium underline">Select other payment method</p>
+                  {/* <p className="mt-4 text-title text-sm font-medium underline">Select other payment method</p> */}
             </div>
       );
 };

@@ -1,11 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button, Select, Input } from 'antd';
+import { Input } from 'antd';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { TProduct } from '@/redux/features/product/productApi';
-
-const { Option } = Select;
 
 const ProductDetailsSummary = ({ product }: { product: TProduct }) => {
       const [unit, setUnit] = useState('cm');
@@ -29,9 +27,11 @@ const ProductDetailsSummary = ({ product }: { product: TProduct }) => {
                   <div className="mt-2">
                         <h2 className="font-medium text-title text-lg">Features</h2>
                         <ul className="list-disc pl-5 text-text-secondary mt-2">
-                              <li>Machine Washable.</li>
-                              <li>Adjustable fit with elastic waistband.</li>
-                              <li>Designed for style and comfort.</li>
+                              {product?.features?.map((feature, index) => (
+                                    <li className="capitalize" key={index}>
+                                          {feature}
+                                    </li>
+                              ))}
                         </ul>
                   </div>
 
@@ -43,7 +43,7 @@ const ProductDetailsSummary = ({ product }: { product: TProduct }) => {
                                     onClick={() => setActiveCategory(category)}
                                     className={`flex justify-between items-center py-2 px-4 rounded-lg ${
                                           activeCategory === category
-                                                ? 'bg-blue-500 text-white border border-transparent'
+                                                ? 'bg-primary text-white border border-transparent'
                                                 : 'border border-gray-400 text-gray-700'
                                     }`}
                               >

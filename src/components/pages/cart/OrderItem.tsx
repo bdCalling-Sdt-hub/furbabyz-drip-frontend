@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { getImageUrl } from '@/utils/getImageUrl';
 import { useAppDispatch } from '@/redux/hooks';
-import { updateQuantity } from '@/redux/features/cart/cartSlice';
+import { removeFromCart, updateQuantity } from '@/redux/features/cart/cartSlice';
 
 // Order Item Component
 export const OrderItem = ({
@@ -30,6 +30,9 @@ export const OrderItem = ({
                   dispatch(updateQuantity({ id, quantity: quantity - 1 }));
             }
       };
+      const handleRemoveItem = () => {
+            dispatch(removeFromCart(id));
+      };
 
       return (
             <div className="shadow-md flex justify-between items-center p-4 rounded-lg">
@@ -45,6 +48,9 @@ export const OrderItem = ({
                               <h3 className="text-md font-medium text-title">{name}</h3>
                               <p className="text-sm text-gray-500">ID {id}</p>
                               <p className="text-md font-medium mt-2 text-tile">${price}</p>
+                              <button onClick={handleRemoveItem} className="text-red-500 text-sm">
+                                    Remove
+                              </button>
                         </div>
                   </div>
                   <div className="flex items-center space-x-2">

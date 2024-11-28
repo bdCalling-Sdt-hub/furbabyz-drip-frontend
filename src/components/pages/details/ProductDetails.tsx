@@ -5,11 +5,11 @@ import DetailsSlider from './DetailsSlider';
 import ProductDetailsSummary from './ProductDetailsSummary';
 // import PaymentOptions from './PaymentOption';
 import SimilarProduct from './SimilarProduct';
-import { useGetSingleProductQuery } from '@/redux/features/product/productApi';
+import { useGetSeminarProductQuery, useGetSingleProductQuery } from '@/redux/features/product/productApi';
 
 const ProductDetailsComponent = ({ id }: { id: string }) => {
       const { data: product } = useGetSingleProductQuery(id);
-      console.log(product);
+      const { data: similarProducts } = useGetSeminarProductQuery(product?.category._id);
 
       return (
             <div className="container">
@@ -23,7 +23,7 @@ const ProductDetailsComponent = ({ id }: { id: string }) => {
                         </div>
                   </div>
                   <div>
-                        <SimilarProduct />
+                        <SimilarProduct products={similarProducts!} />
                   </div>
             </div>
       );

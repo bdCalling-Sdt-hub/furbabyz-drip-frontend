@@ -33,6 +33,13 @@ const productApi = baseApi.injectEndpoints({
                   }),
                   transformResponse: (response: TApiResponseWithPagination<TProduct>) => response.data.result,
             }),
+            getSeminarProduct: builder.query({
+                  query: (id) => ({
+                        url: `/product/get-similar-products/${id}`,
+                        method: 'GET',
+                  }),
+                  transformResponse: (response: TApiResponse<TProduct[]>) => response.data,
+            }),
             getLimitedAddition: builder.query({
                   query: () => ({
                         url: '/product?category=Limited-Edition-Collections',
@@ -86,4 +93,5 @@ export const {
       useGetLimitedAdditionQuery,
       useGetFilterProductsQuery,
       useGetSingleProductQuery,
+      useGetSeminarProductQuery,
 } = productApi;

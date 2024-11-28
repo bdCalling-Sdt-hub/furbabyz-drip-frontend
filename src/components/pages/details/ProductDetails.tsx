@@ -3,7 +3,7 @@ import PageHeader from '@/components/ui/shared/PageHeader';
 import React from 'react';
 import DetailsSlider from './DetailsSlider';
 import ProductDetailsSummary from './ProductDetailsSummary';
-import PaymentOptions from './PaymentOption';
+// import PaymentOptions from './PaymentOption';
 import SimilarProduct from './SimilarProduct';
 import { useGetSingleProductQuery } from '@/redux/features/product/productApi';
 
@@ -20,7 +20,6 @@ const ProductDetailsComponent = ({ id }: { id: string }) => {
                         </div>
                         <div>
                               <ProductDetailsSummary product={product!} />
-                              <PaymentOptions />
                         </div>
                   </div>
                   <div>

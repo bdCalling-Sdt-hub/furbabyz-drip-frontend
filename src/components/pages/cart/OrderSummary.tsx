@@ -1,14 +1,25 @@
-import { Button, Input } from 'antd';
+import { Button } from 'antd';
 import { OrderItem } from './OrderItem';
+import { useAppSelector } from '@/redux/hooks';
 
-// Order Summary Component
+import { useState } from 'react';
+
 export const OrderSummary = () => {
+      const { items, subtotal, totalAmount } = useAppSelector((state) => state.cart);
+
       return (
-            <div className="border rounded-lg p-6">
+            <div className="border rounded-lg p-6 max-w-xl mx-auto">
                   <h2 className="text-lg font-medium text-text-primary mb-4">Order Summary</h2>
                   <div className="space-y-4">
-                        {[...Array(2)].map((_, index) => (
-                              <OrderItem key={index} name="Kitiew Sweater of Heats" price="12.32" id="14143142341234" />
+                        {items?.map((product, index) => (
+                              <OrderItem
+                                    key={index}
+                                    name={product.name}
+                                    price={product.price}
+                                    id={product.id}
+                                    image={product.image}
+                                    quantity={product.quantity}
+                              />
                         ))}
                   </div>
 
@@ -16,23 +27,38 @@ export const OrderSummary = () => {
                   <div className="mt-6 border-t border-gray-200 pt-4">
                         <div className="flex justify-between items-center">
                               <p className="font-medium text-text-secondary">Subtotal</p>
-                              <p className="font-medium text-title">$30.12</p>
-                        </div>
-                        <div className="flex justify-between items-center mt-2">
-                              <p className="font-medium text-text-secondary">Delivery</p>
-                              <p className="font-medium text-title">$30.12</p>
+                              <p className="font-medium text-title">${subtotal.toFixed(2)}</p>
                         </div>
                         <div className="flex justify-between items-center mt-2 py-3 border-t border-gray-200">
                               <p className="text-md font-medium text-text-secondary">Total Amount</p>
-                              <p className="text-md font-medium text-title">$90.24</p>
+                              <p className="text-md font-medium text-title">${totalAmount.toFixed(2)}</p>
                         </div>
-                        <div>
+
+                        {/* Coupon Code Input Section */}
+                        {/* <div className="flex justify-between items-center mt-4">
                               <Input
                                     className="w-full"
-                                    placeholder="Enter Discount Code(if any)"
-                                    style={{ height: 56, width: '100%', backgroundColor: '#F5F5F5', border: 'none' }}
+                                    placeholder="Enter Discount Code (if any)"
+                                    value={couponCode}
+                                    onChange={(e) => setCouponCode(e.target.value)}
+                                    style={{ height: 42, backgroundColor: '#F5F5F5', border: 'none' }}
                               />
-                        </div>
+                              <Button
+                                    type="primary"
+                                    className="ml-3"
+                                    onClick={handleApplyCoupon}
+                                    style={{ backgroundColor: '#31A2FF', color: 'white' }}
+                              >
+                                    Apply
+                              </Button>
+                        </div> */}
+
+                        {/* Optionally display coupon applied status */}
+                        {/* {couponApplied && (
+                              <div className="mt-4 text-green-500">
+                                    <p>Coupon Applied: {couponCode}</p>
+                              </div>
+                        )} */}
                   </div>
 
                   {/* Checkout Button */}

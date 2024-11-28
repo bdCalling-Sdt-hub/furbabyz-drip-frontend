@@ -16,9 +16,9 @@ interface FormData {
 
 // Main Cart Page Component
 const CartPage = () => {
-      const onFinish: FormProps<FormData>['onFinish'] = (values) => {
-            console.log(values, 'onFinish');
-      };
+      // const onFinish: FormProps<FormData>['onFinish'] = (values) => {
+      //       console.log(values, 'onFinish');
+      // };
 
       return (
             <div className="container">
@@ -26,12 +26,12 @@ const CartPage = () => {
                   <h1 className="text-xl text-title font-medium my-8">Checkout Process</h1>
                   <div className="grid grid-cols-12 gap-5">
                         {/* OrderSummary first on mobile, second on larger screens */}
-                        <div className="col-span-12 md:col-span-4 order-1 md:order-2">
+                        <div className="col-span-12 ">
                               <OrderSummary />
                         </div>
-                        <div className="col-span-12 md:col-span-8 order-2 md:order-1">
+                        {/* <div className="col-span-12 md:col-span-8 order-2 md:order-1">
                               <CheckOutForms onFinish={onFinish} />
-                        </div>
+                        </div> */}
                   </div>
             </div>
       );

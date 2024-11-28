@@ -1,121 +1,182 @@
-'use client';
-
 import React, { useState } from 'react';
-import { Input } from 'antd';
+import { Button, Input, Form, notification } from 'antd';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { TProduct } from '@/redux/features/product/productApi';
+import { useAppDispatch } from '@/redux/hooks';
+import { addToCart } from '@/redux/features/cart/cartSlice';
 
 const ProductDetailsSummary = ({ product }: { product: TProduct }) => {
-      const [unit, setUnit] = useState('cm');
-      const [activeCategory, setActiveCategory] = useState('New Arrivals');
-      const categories = ['X-Small', 'Small', 'Medium', 'Large', 'X-Large', 'XX-Large'];
+      const [activeCategory, setActiveCategory] = useState<string | null>(null);
+      const dispatch = useAppDispatch();
+
+      const [form] = Form.useForm();
+
+      const sizes = product?.size || [];
+
+      const validateSize = (_: any, value: string) => {
+            if (!activeCategory) {
+                  return Promise.reject('Please select a size');
+            }
+            return Promise.resolve();
+      };
+
+      const handleAddToCart = (values: any) => {
+            const size = activeCategory || 'default';
+
+            const productToAdd = {
+                  id: product?._id,
+                  name: product?.name,
+                  price: product?.price,
+                  quantity: 1,
+                  size,
+                  image: product?.image[0],
+
+                  neckLength: values.neckLength,
+                  chestLength: values.chestLength,
+                  collarToTail: values.collarToTail,
+            };
+
+            dispatch(addToCart(productToAdd));
+
+            notification.success({
+                  message: 'Product added to cart successfully',
+            });
+
+            form.resetFields();
+            setActiveCategory(null);
+      };
 
       return (
-            <div className="border p-8 rounded-xl">
-                  {/* Title and Price Section */}
-                  <div className="flex justify-between items-start">
-                        <div>
-                              <h1 className="text-2xl text-[#2E2E2E] font-semibold">{product?.name}</h1>
-                              <p className="text-2xl text-title font-medium mt-1">${product?.price}</p>
-                        </div>
-                        <button>
-                              <AiOutlineHeart size={30} />
-                        </button>
-                  </div>
-
-                  {/* Features Section */}
-                  <div className="mt-2">
-                        <h2 className="font-medium text-title text-lg">Features</h2>
-                        <ul className="list-disc pl-5 text-text-secondary mt-2">
-                              {product?.features?.map((feature, index) => (
-                                    <li className="capitalize" key={index}>
-                                          {feature}
-                                    </li>
-                              ))}
-                        </ul>
-                  </div>
-
-                  {/* Size Selection Section */}
-                  <div className="mt-4 flex flex-wrap gap-2">
-                        {categories.map((category, index) => (
-                              <button
-                                    key={index}
-                                    onClick={() => setActiveCategory(category)}
-                                    className={`flex justify-between items-center py-2 px-4 rounded-lg ${
-                                          activeCategory === category
-                                                ? 'bg-primary text-white border border-transparent'
-                                                : 'border border-gray-400 text-gray-700'
-                                    }`}
-                              >
-                                    {category}
-                              </button>
-                        ))}
-                  </div>
-
-                  {/* Unit Toggle Section */}
-                  <div className="mt-6 flex items-center justify-end space-x-2">
-                        <div className="flex items-center justify-center space-x-1 bg-[#F9F9F9] p-1 rounded-full w-32 ">
-                              <button
-                                    onClick={() => setUnit('inch')}
-                                    className={`flex-1 py-2 rounded-full transition-all duration-200 ${
-                                          unit === 'inch' ? 'bg-[#31A2FF] text-white' : 'bg-transparent text-black'
-                                    }`}
-                              >
-                                    inc
-                              </button>
-                              <button
-                                    onClick={() => setUnit('cm')}
-                                    className={`flex-1 py-2 rounded-full transition-all duration-200 ${
-                                          unit === 'cm' ? 'bg-[#31A2FF] text-white' : 'bg-transparent text-black'
-                                    }`}
-                              >
-                                    cm
-                              </button>
-                        </div>
-                  </div>
-
-                  {/* Measurements Section */}
-                  <div className="mt-6">
-                        <h2 className="font-medium text-title text-lg">Measurements</h2>
-                        <div className=" space-y-5 my-5">
-                              <div className="grid grid-cols-2 gap-5 items-center">
-                                    <Input
-                                          style={{
-                                                backgroundColor: '#FBFBFB',
-                                                height: 40,
-                                          }}
-                                          variant="borderless"
-                                          type="number"
-                                          className=""
-                                          placeholder="Enter neck length/size"
-                                          size="large"
-                                    />
-                                    <Input
-                                          style={{
-                                                backgroundColor: '#FBFBFB',
-                                                height: 40,
-                                          }}
-                                          variant="borderless"
-                                          type="number"
-                                          className=""
-                                          placeholder="Enter chest length/size"
-                                          size="large"
-                                    />
-                              </div>
+            <div>
+                  <div className="border p-8 rounded-xl">
+                        {/* Title and Price Section */}
+                        <div className="flex justify-between items-start">
                               <div>
-                                    <Input
-                                          style={{
-                                                backgroundColor: '#FBFBFB',
-                                                height: 40,
-                                          }}
-                                          variant="borderless"
-                                          type="number"
-                                          className=""
-                                          placeholder="Enter length from Collar to Tail"
-                                          size="large"
-                                    />
+                                    <h1 className="text-2xl text-[#2E2E2E] font-semibold">{product?.name}</h1>
+                                    <p className="text-2xl text-title font-medium mt-1">${product?.price?.toFixed(2)}</p>
                               </div>
+                              <button>
+                                    <AiOutlineHeart size={30} />
+                              </button>
                         </div>
+
+                        {/* Features Section */}
+                        <div className="mt-2">
+                              <h2 className="font-medium text-title text-lg">Features</h2>
+                              <ul className="list-disc pl-5 text-text-secondary mt-2">
+                                    {product?.features?.map((feature, index) => (
+                                          <li className="capitalize" key={index}>
+                                                {feature}
+                                          </li>
+                                    ))}
+                              </ul>
+                        </div>
+
+                        {/* Size Selection Section */}
+                        <Form
+                              onFinish={handleAddToCart}
+                              form={form} // Bind the form to the Form instance
+                              className="mt-6"
+                              initialValues={{
+                                    neckLength: '',
+                                    chestLength: '',
+                                    collarToTail: '',
+                              }}
+                        >
+                              <h2 className="font-medium text-title text-lg">Size</h2>
+                              <Form.Item
+                                    name="size"
+                                    rules={[{ validator: validateSize }]} // Custom validation for size
+                              >
+                                    <div className="mt-4 flex flex-wrap gap-2">
+                                          {sizes?.map((size: string, index: number) => (
+                                                <button
+                                                      key={index}
+                                                      onClick={() => setActiveCategory(size)}
+                                                      className={`flex justify-between items-center py-2 px-4 rounded-lg ${
+                                                            activeCategory === size
+                                                                  ? 'bg-primary text-white border border-transparent'
+                                                                  : 'border border-gray-400 text-gray-700'
+                                                      }`}
+                                                >
+                                                      {size}
+                                                </button>
+                                          ))}
+                                    </div>
+                              </Form.Item>
+
+                              {/* Measurements Section */}
+                              <h2 className="font-medium text-title text-lg">Measurements</h2>
+                              <div className="space-y-5 my-5">
+                                    <div className="grid grid-cols-2 gap-5 items-center">
+                                          <Form.Item
+                                                name="neckLength"
+                                                rules={[{ required: true, message: 'Please enter neck length/size' }]}
+                                          >
+                                                <Input
+                                                      style={{
+                                                            backgroundColor: '#FBFBFB',
+                                                            height: 40,
+                                                      }}
+                                                      variant="borderless"
+                                                      type="number"
+                                                      placeholder="Enter neck length/size"
+                                                      size="large"
+                                                />
+                                          </Form.Item>
+                                          <Form.Item
+                                                name="chestLength"
+                                                rules={[{ required: true, message: 'Please enter chest length/size' }]}
+                                          >
+                                                <Input
+                                                      style={{
+                                                            backgroundColor: '#FBFBFB',
+                                                            height: 40,
+                                                      }}
+                                                      variant="borderless"
+                                                      type="number"
+                                                      placeholder="Enter chest length/size"
+                                                      size="large"
+                                                />
+                                          </Form.Item>
+                                    </div>
+                                    <div>
+                                          <Form.Item
+                                                name="collarToTail"
+                                                rules={[{ required: true, message: 'Please enter length from Collar to Tail' }]}
+                                          >
+                                                <Input
+                                                      style={{
+                                                            backgroundColor: '#FBFBFB',
+                                                            height: 40,
+                                                      }}
+                                                      variant="borderless"
+                                                      type="number"
+                                                      placeholder="Enter length from Collar to Tail"
+                                                      size="large"
+                                                />
+                                          </Form.Item>
+                                    </div>
+                              </div>
+
+                              {/* Add to Cart Button */}
+                              <div className="my-10">
+                                    <Button
+                                          shape="round"
+                                          style={{
+                                                backgroundColor: '#000000',
+                                                width: '100%',
+                                                height: 56,
+                                                color: '#FFFFFF',
+                                                fontSize: 18,
+                                          }}
+                                          type="primary"
+                                          htmlType="submit"
+                                    >
+                                          Add to Cart
+                                    </Button>
+                              </div>
+                        </Form>
                   </div>
             </div>
       );

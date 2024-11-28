@@ -3,7 +3,6 @@ import { Button, notification } from 'antd';
 import Image from 'next/image';
 import Pet from '@/assets/images/landing-pet-profile/landing-pet-profile.png';
 import { MdArrowRightAlt } from 'react-icons/md';
-import Link from 'next/link';
 import { useAppSelector } from '@/redux/hooks';
 import { useRouter } from 'next/navigation';
 

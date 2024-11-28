@@ -9,13 +9,14 @@ import { useState } from 'react';
 import NavItems from './NavItems';
 import MobileDrawer from './MobileDrawer';
 import { usePathname } from 'next/navigation';
-import { Button } from 'antd';
+import { Badge, Button } from 'antd';
 import { useAppSelector } from '@/redux/hooks';
 import { useMyProfileQuery } from '@/redux/features/user/userApi';
 import { getImageUrl } from '@/utils/getImageUrl';
 
 const Navbar = () => {
       const [showDrawer, setShowDrawer] = useState(false);
+      const cartItems = useAppSelector((state) => state.cart.items);
       const { user } = useAppSelector((state) => state.auth);
       const { data: profile } = useMyProfileQuery(undefined, {
             skip: !user,
@@ -43,8 +44,10 @@ const Navbar = () => {
                               </div>
                               <div className="hidden md:flex items-center space-x-6">
                                     {/* cart */}
-                                    <Link href={'/cart'} className="w-14 h-14 flex items-center justify-center rounded-full bg-[#FDF7F8]">
-                                          <AiOutlineShoppingCart size={28} />
+                                    <Link href="/cart" className="w-14 h-14 flex items-center justify-center rounded-full bg-[#FDF7F8]">
+                                          <Badge count={cartItems.length} color="#31A2FF" overflowCount={99} size="small">
+                                                <AiOutlineShoppingCart size={28} />
+                                          </Badge>
                                     </Link>
                                     {/* search */}
                                     {/* <div className="w-14 h-14 flex items-center justify-center rounded-full bg-[#FDF7F8]">

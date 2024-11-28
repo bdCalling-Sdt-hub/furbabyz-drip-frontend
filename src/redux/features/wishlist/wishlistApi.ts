@@ -15,6 +15,18 @@ const wishlistApi = baseApi.injectEndpoints({
                   },
                   providesTags: ['Wishlist'],
             }),
+            getMyWishlist: build.query({
+                  query: () => {
+                        return {
+                              url: '/wishList/get-my-wishlist',
+                              method: 'GET',
+                        };
+                  },
+                  transformResponse: (response: TApiResponse<any>) => {
+                        return response.data;
+                  },
+                  providesTags: ['Wishlist'],
+            }),
             addWishlist: build.mutation({
                   query: (id) => {
                         return {
@@ -36,4 +48,4 @@ const wishlistApi = baseApi.injectEndpoints({
       }),
 });
 
-export const { useAddWishlistMutation, useGetWishlistQuery, useRemoveWishlistMutation } = wishlistApi;
+export const { useAddWishlistMutation, useGetWishlistQuery, useRemoveWishlistMutation, useGetMyWishlistQuery } = wishlistApi;

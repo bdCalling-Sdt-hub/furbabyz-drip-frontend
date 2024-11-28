@@ -58,7 +58,7 @@ const Navbar = () => {
                                                             alt="Profile"
                                                             width={56}
                                                             height={56}
-                                                            className="object-cover"
+                                                            className="object-cover rounded-full h-full"
                                                       />
                                                 </div>
                                           </Link>

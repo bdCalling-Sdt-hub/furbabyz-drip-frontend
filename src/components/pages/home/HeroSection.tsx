@@ -1,9 +1,23 @@
+'use client';
 import Image from 'next/image';
 import NewHero from '@/assets/images/hero-section/new-hero.svg';
-import { Button } from 'antd';
+import { Button, notification } from 'antd';
 import { MdArrowRightAlt } from 'react-icons/md';
+import { useAppSelector } from '@/redux/hooks';
+import { useRouter } from 'next/navigation';
 
 const HeroSection = () => {
+      const { user } = useAppSelector((state) => state.auth);
+      const router = useRouter();
+
+      const handleClickCreateProfile = () => {
+            if (!user) {
+                  return notification.error({
+                        message: 'Please login to create pet profile',
+                  });
+            }
+            router.push('/dashboard/accounts');
+      };
       return (
             <section className="hero-bg text-title -mt-[80px] h-[calc(100vh)] py-10 md:py-0">
                   <div className="container h-full mx-auto flex flex-col-reverse md:flex-row gap-5 items-center justify-between">
@@ -22,6 +36,7 @@ const HeroSection = () => {
                               {/* Buttons */}
                               <div className="flex flex-wrap gap-5 justify-center md:justify-start">
                                     <Button
+                                          href="/products"
                                           shape="round"
                                           style={{
                                                 height: 56,
@@ -32,6 +47,7 @@ const HeroSection = () => {
                                           Shop the Collection
                                     </Button>
                                     <Button
+                                          onClick={handleClickCreateProfile}
                                           icon={<MdArrowRightAlt size={24} />}
                                           iconPosition="end"
                                           shape="round"

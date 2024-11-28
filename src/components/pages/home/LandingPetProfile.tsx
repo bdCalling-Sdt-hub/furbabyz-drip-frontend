@@ -1,11 +1,23 @@
 'use client';
-import { Button } from 'antd';
+import { Button, notification } from 'antd';
 import Image from 'next/image';
 import Pet from '@/assets/images/landing-pet-profile/landing-pet-profile.png';
 import { MdArrowRightAlt } from 'react-icons/md';
 import Link from 'next/link';
+import { useAppSelector } from '@/redux/hooks';
+import { useRouter } from 'next/navigation';
 
 const LandingPetProfile = () => {
+      const { user } = useAppSelector((state) => state.auth);
+      const router = useRouter();
+      const handleClickCreateProfile = () => {
+            if (!user) {
+                  return notification.error({
+                        message: 'Please login to create pet profile',
+                  });
+            }
+            router.push('/dashboard/accounts');
+      };
       return (
             <div className="bg-[#F7F7F7] py-20">
                   <div className="container grid grid-cols-1 md:grid-cols-2 items-center justify-between  ">
@@ -54,21 +66,21 @@ const LandingPetProfile = () => {
                                           </li>
                                     </ul>
                               </div>
-                              <Link href={'/accounts'}>
-                                    <Button
-                                          className="mt-5"
-                                          iconPosition="end"
-                                          icon={<MdArrowRightAlt size={24} />}
-                                          shape="round"
-                                          style={{
-                                                backgroundColor: '#584857',
-                                                height: 56,
-                                          }}
-                                          type="primary"
-                                    >
-                                          Create Pet Profile
-                                    </Button>
-                              </Link>
+
+                              <Button
+                                    onClick={handleClickCreateProfile}
+                                    className="mt-5"
+                                    iconPosition="end"
+                                    icon={<MdArrowRightAlt size={24} />}
+                                    shape="round"
+                                    style={{
+                                          backgroundColor: '#584857',
+                                          height: 56,
+                                    }}
+                                    type="primary"
+                              >
+                                    Create Pet Profile
+                              </Button>
                         </div>
                   </div>
             </div>

@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import Image from 'next/image';
 import { Button, notification } from 'antd';
 import { TPetProfile } from './PetProfile';
-import { IMAGE_URL } from '@/redux/base/baseApi';
+
 import { useUpdatePetProfileMutation } from '@/redux/features/profile/profileApi';
 import { TUser, useUpdateUserProfileMutation } from '@/redux/features/user/userApi';
 import { getImageUrl } from '@/utils/getImageUrl';
@@ -15,7 +15,6 @@ interface ProfileImageUploaderProps {
 
 const ProfileImageUploader: React.FC<ProfileImageUploaderProps> = ({ selectedProfile, profileType }) => {
       const fileInputRef = useRef<HTMLInputElement | null>(null);
-      console.log(selectedProfile);
 
       const [updatePetProfile] = useUpdatePetProfileMutation();
       const [updateUserProfile] = useUpdateUserProfileMutation();
@@ -38,10 +37,7 @@ const ProfileImageUploader: React.FC<ProfileImageUploaderProps> = ({ selectedPro
                                     data: formData,
                               }).unwrap();
                         } else if (profileType === 'user') {
-                              res = await updateUserProfile({
-                                    id: selectedProfile?._id,
-                                    data: formData,
-                              }).unwrap();
+                              res = await updateUserProfile(formData).unwrap();
                         }
 
                         if (res?.success) {

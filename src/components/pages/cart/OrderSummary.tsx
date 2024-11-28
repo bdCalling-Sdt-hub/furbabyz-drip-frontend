@@ -52,7 +52,7 @@ export const OrderSummary = () => {
 
                               {/* Checkout Button */}
                               <div className="mt-6">
-                                    <Button type="primary" className="w-full rounded-full bg-[#31A2FF] py-1">
+                                    <Button type="primary" className="w-full rounded-full  py-1">
                                           Checkout
                                     </Button>
                               </div>

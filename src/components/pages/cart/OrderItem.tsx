@@ -20,12 +20,10 @@ export const OrderItem = ({
       const dispatch = useAppDispatch();
 
       const handleUpdateQuantity = () => {
-            // Update quantity to +1
             dispatch(updateQuantity({ id, quantity: quantity + 1 }));
       };
 
       const handleDecreaseQuantity = () => {
-            // Prevent decreasing below 1
             if (quantity > 1) {
                   dispatch(updateQuantity({ id, quantity: quantity - 1 }));
             }
@@ -35,7 +33,7 @@ export const OrderItem = ({
       };
 
       return (
-            <div className="shadow-md flex justify-between items-center p-4 rounded-lg">
+            <div className="shadow flex justify-between items-center p-4 rounded-lg">
                   <div className="flex space-x-4">
                         <Image
                               width={1000}
@@ -54,11 +52,11 @@ export const OrderItem = ({
                         </div>
                   </div>
                   <div className="flex items-center space-x-2">
-                        <button onClick={handleUpdateQuantity} className="text-xl">
+                        <button onClick={handleUpdateQuantity} className="text-2xl">
                               +
                         </button>
                         <span className="bg-black text-center mx-auto size-[24px] rounded-full text-white">{quantity}</span>
-                        <button onClick={handleDecreaseQuantity} className="text-xl">
+                        <button onClick={handleDecreaseQuantity} className="text-2xl">
                               -
                         </button>
                   </div>

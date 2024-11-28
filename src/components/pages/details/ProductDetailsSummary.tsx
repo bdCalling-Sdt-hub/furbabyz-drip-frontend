@@ -55,9 +55,9 @@ const ProductDetailsSummary = ({ product }: { product: TProduct }) => {
                                     <h1 className="text-2xl text-[#2E2E2E] font-semibold">{product?.name}</h1>
                                     <p className="text-2xl text-title font-medium mt-1">${product?.price?.toFixed(2)}</p>
                               </div>
-                              <button>
+                              {/* <button>
                                     <AiOutlineHeart size={30} />
-                              </button>
+                              </button> */}
                         </div>
 
                         {/* Features Section */}

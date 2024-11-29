@@ -32,12 +32,16 @@ p {
 }
 
 .hero-bg {
-      background: rgb(255, 255, 255);
+      /* background: rgb(255, 255, 255);
       background: radial-gradient(
             circle,
             rgba(255, 255, 255, 1) 4%,
             rgba(249, 229, 232, 1) 60%,
             rgba(249, 229, 232, 1) 74%,
             rgba(249, 229, 232, 1) 100%
-      );
+      ); */
+      background-image: url('../assets/images/hero-section/hero-bg.png');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
 }

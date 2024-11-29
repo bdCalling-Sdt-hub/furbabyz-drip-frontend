@@ -1,4 +1,5 @@
-import { Button } from 'antd';
+'use client';
+import { Button, notification } from 'antd';
 import { OrderItem } from './OrderItem';
 import { useAppSelector } from '@/redux/hooks';
 import { Empty } from 'antd';
@@ -36,6 +37,7 @@ type PaymentData = {
 };
 
 export const OrderSummary = () => {
+      const { user } = useAppSelector((state) => state.auth);
       const { items, subtotal, totalAmount } = useAppSelector(
             (state: { cart: { items: CartItem[]; subtotal: number; totalAmount: number } }) => state.cart
       );
@@ -48,6 +50,11 @@ export const OrderSummary = () => {
 
       const handleCheckoutClick = () => {
             // Format products data
+            if (!user) {
+                  return notification.error({
+                        message: 'Please login to checkout',
+                  });
+            }
             const formattedProducts: FormattedProduct[] = items.map((item) => ({
                   productId: item.id,
                   quantity: item.quantity,

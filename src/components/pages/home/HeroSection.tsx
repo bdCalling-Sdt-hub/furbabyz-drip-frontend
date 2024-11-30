@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import NewHero from '@/assets/images/hero-section/new-hero.svg';
+import NewHero from '@/assets/images/hero-section/hero-updated.svg';
 import { Button, notification } from 'antd';
 import { MdArrowRightAlt } from 'react-icons/md';
 import { useAppSelector } from '@/redux/hooks';

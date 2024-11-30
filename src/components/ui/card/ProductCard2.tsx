@@ -52,7 +52,7 @@ const ProductCard2 = ({ product }: { product: TProduct }) => {
             }
       };
       return (
-            <div key={product._id} className="px-2">
+            <Link href={`/products/${product._id}`} key={product._id} className="px-2">
                   <div className="product-card bg-[#FBFBFB] relative h-full rounded-lg overflow-hidden">
                         <Image
                               src={`${IMAGE_URL}/${product?.image[0]}`}
@@ -61,7 +61,7 @@ const ProductCard2 = ({ product }: { product: TProduct }) => {
                               height={300}
                               className="object-cover w-full h-[266px] mx-auto"
                         />
-                        <Link href={`/products/${product._id}`} className="p-4 h-full text-center">
+                        <div className="p-4 h-full text-center">
                               <h2 className="text-lg text-title font-semibold">{product?.name}</h2>
                               <div className="flex items-center justify-center text-yellow-500 mb-2">
                                     <RxStarFilled size={16} />
@@ -70,8 +70,13 @@ const ProductCard2 = ({ product }: { product: TProduct }) => {
                               </div>
 
                               <p className="text-xl font-medium">$ {product?.price.toFixed(2)}</p>
-                        </Link>
-                        <div onClick={handleToggleWishlist}>
+                        </div>
+                        <div
+                              onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleToggleWishlist(e);
+                              }}
+                        >
                               {isFavorite ? (
                                     <GoHeartFill className="absolute top-6 right-6 text-yellow-400 text-3xl cursor-pointer" />
                               ) : (
@@ -79,7 +84,7 @@ const ProductCard2 = ({ product }: { product: TProduct }) => {
                               )}
                         </div>
                   </div>
-            </div>
+            </Link>
       );
 };
 

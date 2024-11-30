@@ -22,7 +22,7 @@ const Footer = () => {
                               </div>
 
                               {/* Shop Section */}
-                              <div className="w-full md:w-auto text-center md:text-left">
+                              {/* <div className="w-full md:w-auto text-center md:text-left">
                                     <h3 className="font-bold mb-2">Shop</h3>
                                     <ul>
                                           <li>
@@ -41,7 +41,7 @@ const Footer = () => {
                                                 </Link>
                                           </li>
                                     </ul>
-                              </div>
+                              </div> */}
 
                               {/* Company Section */}
                               <div className="w-full md:w-auto text-center md:text-left">

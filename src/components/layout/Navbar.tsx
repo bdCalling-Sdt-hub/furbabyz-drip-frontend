@@ -70,7 +70,7 @@ const Navbar = () => {
                                                 <Button
                                                       shape="round"
                                                       style={{
-                                                            backgroundColor: '#584857',
+                                                            backgroundColor: '#31A2FF',
                                                             height: 48,
                                                       }}
                                                       type="primary"

@@ -22,7 +22,7 @@ const ProductsPage = () => {
       const { data: productData } = useGetFilterProductsQuery([
             { name: 'category', value: category },
             { name: productType, value: (productType == 'newProduct' && true) || (productType == 'bestSellingProduct' && 5) },
-            { name: 'size', value: size },
+            { name: 'sizes', value: size },
             { name: 'colors', value: color },
             { name: 'gender', value: gender },
             { name: 'searchTerm', value: search },

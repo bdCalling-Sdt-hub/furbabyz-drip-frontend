@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Button, Input, Form, notification } from 'antd';
-import { AiOutlineHeart } from 'react-icons/ai';
 import { TProduct } from '@/redux/features/product/productApi';
 import { useAppDispatch } from '@/redux/hooks';
 import { addToCart } from '@/redux/features/cart/cartSlice';
@@ -12,6 +11,7 @@ const ProductDetailsSummary = ({ product }: { product: TProduct }) => {
       const [form] = Form.useForm();
 
       const sizes = product?.size || [];
+      console.log(product);
 
       const validateSize = (_: any, value: string) => {
             if (!activeCategory) {
@@ -89,17 +89,17 @@ const ProductDetailsSummary = ({ product }: { product: TProduct }) => {
                                     rules={[{ validator: validateSize }]} // Custom validation for size
                               >
                                     <div className="mt-4 flex flex-wrap gap-2">
-                                          {sizes?.map((size: string, index: number) => (
+                                          {sizes?.map((size: { _id: string; sizeName: string }) => (
                                                 <button
-                                                      key={index}
-                                                      onClick={() => setActiveCategory(size)}
+                                                      key={size._id}
+                                                      onClick={() => setActiveCategory(size.sizeName)}
                                                       className={`flex justify-between items-center py-2 px-4 rounded-lg ${
-                                                            activeCategory === size
+                                                            activeCategory === size.sizeName
                                                                   ? 'bg-primary text-white border border-transparent'
                                                                   : 'border border-gray-400 text-gray-700'
                                                       }`}
                                                 >
-                                                      {size}
+                                                      {size.sizeName}
                                                 </button>
                                           ))}
                                     </div>

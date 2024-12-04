@@ -53,7 +53,9 @@ const LimitedEdition = () => {
                   </div>
                   <Carousel {...settings} ref={carouselRef} className="product-carousel">
                         {limitedProducts?.map((product: TProduct) => (
-                              <ProductCard key={product._id} product={product} />
+                              <div key={product._id} className="px-4">
+                                    <ProductCard product={product} />
+                              </div>
                         ))}
                   </Carousel>
                   <CarouselNavigation key={'carousel'} next={next} prev={prev} />

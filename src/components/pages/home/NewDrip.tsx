@@ -74,7 +74,9 @@ const NewDrip = () => {
                   </div>
                   <Carousel {...settings} ref={carouselRef} className="product-carousel">
                         {products?.map((product) => (
-                              <ProductCard product={product} key={product._id} />
+                              <div key={product._id} className="px-4">
+                                    <ProductCard product={product} />
+                              </div>
                         ))}
                   </Carousel>
                   <CarouselNavigation key={'carousel'} next={next} prev={prev} />

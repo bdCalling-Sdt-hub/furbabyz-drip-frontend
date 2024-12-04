@@ -14,7 +14,7 @@ p {
       font-family: 'Hind Siliguri', sans-serif;
 }
 .aboutHeroBg {
-      background-image: url('../assets/images/about/dog.png');
+      background-image: url('/dog.png');
       min-height: calc(100vh);
       background-position: top;
       background-repeat: no-repeat;
@@ -23,7 +23,7 @@ p {
 }
 
 .authBg {
-      background-image: url('../assets/images/auth/authbg.png');
+      background-image: url('/authbg.png');
       min-height: calc(100vh - 96px);
       background-position: top;
       background-repeat: no-repeat;
@@ -40,7 +40,7 @@ p {
             rgba(249, 229, 232, 1) 74%,
             rgba(249, 229, 232, 1) 100%
       ); */
-      background-image: url('../assets/images/hero-section/hero-bg.png');
+      background-image: url('/hero-bg.png');
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;

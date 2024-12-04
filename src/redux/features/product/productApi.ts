@@ -13,7 +13,10 @@ export interface TProduct {
       image: string[];
       video: string;
       price: number;
-      size: string[];
+      size: {
+            _id: string;
+            sizeName: string;
+      }[];
       colors: string;
       gender: string;
       status: string;

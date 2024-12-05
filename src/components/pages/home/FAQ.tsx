@@ -9,6 +9,7 @@ import { useGetFaqsQuery } from '@/redux/features/faq/faqApi';
 const FAQ = () => {
       const { data: faqs } = useGetFaqsQuery([]); // Get FAQ data from API
 
+      console.log(faqs);
       const panelStyle = {
             marginBottom: 10,
             background: '#F3F3F3',
@@ -20,7 +21,7 @@ const FAQ = () => {
 
       // Ensure the faqs data is available before rendering the component
       const getItems = (panelStyle: any) => {
-            return faqs?.map((faq: any) => ({
+            return faqs?.result?.map((faq: any) => ({
                   key: faq._id, // Using the unique _id as the key
                   label: <p className="text-lg text-[#414141] ">{faq.question}</p>,
                   children: <p className="text-sm text-[#414141] ">{faq.answer}</p>,

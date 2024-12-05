@@ -16,7 +16,7 @@ const blogApi = baseApi.injectEndpoints({
                   query: () => {
                         return { url: '/blog', method: 'GET' };
                   },
-                  transformResponse: (response: TApiResponse<TBlog[]>) => {
+                  transformResponse: (response: any) => {
                         return response.data;
                   },
             }),

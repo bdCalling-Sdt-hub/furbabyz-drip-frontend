@@ -108,7 +108,7 @@ const BlogSection = () => {
                   </div>
                   <div className="relative">
                         <Carousel {...settings} ref={carouselRef} className="product-carousel">
-                              {blogs?.slice(0, 10)?.map((blogs: TBlog) => (
+                              {blogs?.result?.slice(0, 10)?.map((blogs: TBlog) => (
                                     <BlogCard
                                           key={blogs._id}
                                           id={blogs._id}

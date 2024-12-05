@@ -19,12 +19,15 @@ const BlogsPage = () => {
                               covers everything from seasonal style guides to behind-the-scenes looks at our latest collections."
                   />
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 justify-center gap-3 my-10">
-                        {blogs?.map((blog: TBlog, index) => {
+                  <div className="grid grid-cols-1 md:grid-cols-2 justify-center gap-3 my-10 ">
+                        {blogs?.result?.map((blog: TBlog, index: number) => {
                               return (
-                                    <div key={index} className={`${id == blog._id ? 'bg-[#f9f6f4]' : 'bg-[#F9F9F9]'}   mx-auto rounded-xl`}>
+                                    <div
+                                          key={index}
+                                          className={`bg-[#F9F9F9] w-full ${id == blog._id ? 'bg-[#f9f6f4]' : ''}   mx-auto rounded-xl`}
+                                    >
                                           {/* Image and Avatar */}
-                                          <div className="m-5 rounded-t-xl  h-[370px]">
+                                          <div className="m-5 rounded-t-xl h-[370px]">
                                                 <div className="w-[261px] h-[369px] mx-auto flex items-center">
                                                       <Image
                                                             className="w-full h-full mx-auto  object-cover"

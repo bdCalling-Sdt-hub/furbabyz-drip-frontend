@@ -19,14 +19,16 @@ const HeroSection = () => {
             router.push('/dashboard/accounts');
       };
       return (
-            <section className="hero-bg text-title -mt-[80px] h-[calc(100vh)] py-10 md:py-0">
+            <section className="bg-gradient-to-r from-violet-200 to-purple-500 text-title -mt-[80px] h-[calc(100vh)] py-24 md:py-0">
                   <div className="container h-full mx-auto flex flex-col-reverse md:flex-row gap-5 items-center justify-between">
                         {/* Text Section */}
                         <div className="md:w-1/2 text-center md:text-left">
-                              <h1 className="text-3xl italic font-extrabold leading-10 md:text-5xl mb-4">
+                              <h1 className="text-4xl  tracking-wide urbarnHero font-medium leading-10 md:text-5xl mb-4">
                                     UNLEASH YOUR PET’S SWAG
                                     <br />
-                                    WITH <span className="text-primary">FURBABYZ DRIP</span>
+                                    <span className="mt-1 urbarnHero block">
+                                          WITH <span className="text-primary urbarnHero font-medium">FURBABYZ DRIP</span>
+                                    </span>
                               </h1>
                               <p className="mb-6 w-full max-w-[70ch]">
                                     Culture-inspired fashion for dogs who drip style. Dress your fur baby in the latest streetwear trends

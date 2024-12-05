@@ -15,7 +15,7 @@ const FAQPageSection = () => {
             fontSize: '14px',
       };
       const getItems = (panelStyle: any) => {
-            return faqs?.map((faq: any) => ({
+            return faqs?.result?.map((faq: any) => ({
                   key: faq._id, // Using the unique _id as the key
                   label: <p className="text-lg text-[#414141] ">{faq.question}</p>,
                   children: <p className="text-sm text-[#414141] ">{faq.answer}</p>,

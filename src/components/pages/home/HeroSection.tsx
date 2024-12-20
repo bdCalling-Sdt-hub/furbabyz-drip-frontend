@@ -19,7 +19,7 @@ const HeroSection = () => {
             router.push('/dashboard/accounts');
       };
       return (
-            <section className="bg-gradient-to-r from-violet-200 to-purple-500 text-title -mt-[80px] h-[calc(100vh)] py-24 md:py-0">
+            <section className="bg-gradient-to-r from-violet-200 to-purple-500 text-title -mt-[80px] h-[calc(100vh)] py-24     md:py-0">
                   <div className="container h-full mx-auto flex flex-col-reverse md:flex-row gap-5 items-center justify-between">
                         {/* Text Section */}
                         <div className="md:w-1/2 text-center md:text-left">

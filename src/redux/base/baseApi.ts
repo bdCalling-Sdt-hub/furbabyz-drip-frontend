@@ -2,8 +2,8 @@ import { BaseQueryApi, BaseQueryFn, createApi, DefinitionType, FetchArgs, fetchB
 import { RootState } from '../store';
 import { logout, setUser } from '../features/auth/authSlice';
 import { TApiResponse } from '@/types';
-export const BASE_URL = 'http://192.168.10.18:5050/api/v1';
-export const IMAGE_URL = 'http://192.168.10.18:5050';
+export const BASE_URL = 'http://139.59.0.25:5050/api/v1';
+export const IMAGE_URL = 'http://139.59.0.25:5050';
 const baseQuery = fetchBaseQuery({
       baseUrl: BASE_URL,
 
